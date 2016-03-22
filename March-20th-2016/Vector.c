@@ -118,4 +118,4 @@ static int VectorEnsureCapacity(struct Vector* self, size_t minCapacity) {
 		self->_items = newArray;
 	}
 	return 0;
-}
+} 
