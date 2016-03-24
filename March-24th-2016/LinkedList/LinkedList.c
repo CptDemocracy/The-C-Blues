@@ -17,7 +17,7 @@ static int LinkedListNodeNew(struct LinkedListNode* self,
 		return EINVAL;
 	}
 
-	self->item = calloc(1, owner->_itemSize);
+	self->item = calloc(1u, owner->_itemSize);
 	if (!self->item) {
 		errno = ENOMEM;
 		return errno;
@@ -53,7 +53,7 @@ int LinkedListNew(struct LinkedList* self, size_t itemSize, void(*dispose)(void*
 		errno = EINVAL;
 		return EINVAL;
 	}
-	self->_count = 0;
+	self->_count = 0u;
 	self->_first = NULL;
 	self->_last  = NULL;
 	self->_dispose = dispose;
@@ -67,7 +67,7 @@ int LinkedListAddFirst(struct LinkedList* self, const void* item) {
 		errno = EINVAL;
 		return EINVAL;
 	}
-	struct LinkedListNode* pNode = calloc(1, sizeof(struct LinkedListNode));
+	struct LinkedListNode* pNode = calloc(1u, sizeof(struct LinkedListNode));
 	if (!pNode) {
 		errno = ENOMEM;
 		return ENOMEM;
@@ -89,7 +89,7 @@ int LinkedListAddLast(struct LinkedList* self, const void* item) {
 		errno = EINVAL;
 		return EINVAL;
 	}
-	struct LinkedListNode* pNode = calloc(1, sizeof(struct LinkedListNode));
+	struct LinkedListNode* pNode = calloc(1u, sizeof(struct LinkedListNode));
 	if (!pNode) {
 		errno = ENOMEM;
 		return ENOMEM;
@@ -118,6 +118,7 @@ int LinkedListRemoveFirst(struct LinkedList* self) {
 	self->_first = self->_first->next;
 	self->_first->prev = NULL;
 	LinkedListNodeDispose(currNode);
+	free(currNode);
 	--self->_count;
 	return 0;
 }
@@ -135,6 +136,7 @@ int LinkedListRemoveLast(struct LinkedList* self) {
 	self->_last = self->_last->prev;
 	self->_last->next = NULL;
 	LinkedListNodeDispose(currNode);
+	free(currNode);
 	--self->_count;
 	return 0;
 }
@@ -151,6 +153,7 @@ int LinkedListDispose(struct LinkedList* self) {
 		LinkedListNodeDispose(currNode);
 		free(currNode);
 	}
+	self->_count = 0u;
 	return 0;
 }
 
