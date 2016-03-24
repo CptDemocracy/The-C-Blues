@@ -4,8 +4,8 @@
 #include <errno.h>
 #include "strmanip.h"
 
-static int KMP(const char* text, int textLen, const char* pattern, int patternLen);
-static int* KMPCalculateDFA(const char* pattern, int patternLen, int** pOutResultDFA);
+#define ERROR		-2
+#define NOT_FOUND	-1
 
 int CountWords(const char* text) {
 	
@@ -31,7 +31,10 @@ int CountWords(const char* text) {
 	return count;
 }
 
-int Substring(const char* text, int start, int count, char* OutResult) {
+int Substring(const char* text, 
+	int start, 
+	int count, 
+	char* OutResult) {
 	if (!text) {
 		errno = EINVAL;
 		return 0;
@@ -61,7 +64,7 @@ int IsSubstringOf(const char* target, const char* substring) {
 		errno = EINVAL;
 		return 0;
 	}	
-	return KMP(target, strlen(target), substring, strlen(substring)) >= 0;
+	return KMP(target, 0, strlen(target), substring, strlen(substring)) >= 0;
 }
 
 int FindString(const char* target, const char* substring) {
@@ -75,8 +78,6 @@ int FindString(const char* target, const char* substring) {
 	// Whenever possible, make it each function's responsibility to deallocate the dynamic
 	// memory it requested.
 
-	const int ERROR = -2;
-
 	if (!target) {
 		errno = EINVAL;
 		return ERROR;
@@ -85,10 +86,14 @@ int FindString(const char* target, const char* substring) {
 		errno = EINVAL;
 		return ERROR;
 	}
-	return KMP(target, strlen(target), substring, strlen(substring));
+	return KMP(target, 0, strlen(target), substring, strlen(substring));
 }
 
-static int* KMPCalculateDFA(const char* pattern, int patternLen, int** pOutResultDFA) {
+int* KMPCalculateDFA(const char* pattern, 
+	int patternLen, 
+	int* dfa) 
+{
+
 	// NULL passed instead of a cstring
 	if (!pattern) {
 		errno = EINVAL;
@@ -100,11 +105,10 @@ static int* KMPCalculateDFA(const char* pattern, int patternLen, int** pOutResul
 		return NULL;
 	}
 	// NULL passed instead of a pointer to the DFA table
-	if (!pOutResultDFA) {
+	if (!dfa) {
 		errno = EINVAL;
 		return NULL;
 	}
-	int* dfa = *pOutResultDFA;
 	int k  = -1;
 	dfa[0] = k;
 	for (int i = 1; i < patternLen; ++i) {
@@ -119,59 +123,47 @@ static int* KMPCalculateDFA(const char* pattern, int patternLen, int** pOutResul
 	return dfa;
 }
 
-static int KMP(const char* text, int textLen, const char* pattern, int patternLen) {
+int KMP(const char* source, 
+	int start, 
+	int sourceLen, 
+	const char* pattern, 
+	int patternLen) 
+{
 
-	const int NOT_FOUND = -1;
-	const int ERROR		= -2;
+	if (!source || !pattern) {
+		errno = EINVAL;
+		return ERROR;
+	}
+	if (sourceLen  <= 0 ||
+		patternLen <= 0) 
+	{
+		errno = EINVAL;
+		return ERROR;
+	}
+	if (start < 0 || start >= sourceLen) {
+		errno = EINVAL;
+		return ERROR;
+	}
 
-	// NULL instead of a cstring
-	if (!text) {
-		errno = EINVAL;
-		return ERROR;
-	}
-	// out of range
-	if (textLen < 0) {
-		errno = EINVAL;
-		return ERROR;
-	}
-	// okay, but return NOT FOUND
-	if (textLen == 0) {
-		return NOT_FOUND;
-	}
-	// NULL instead of a cstring
-	if (!pattern) {
-		errno = EINVAL;
-		return ERROR;
-	}
-	// we do not allow empty pattern lengths
-	// and treat them illegal as well as negative 
-	// ones
-	if (patternLen <= 0) {
-		errno = EINVAL;
-		return ERROR;
-	}
+	source += start;
+
 	int* dfa = calloc(patternLen, sizeof(int));
 	if (!dfa) {
 		errno = ENOMEM;
 		return ERROR;
 	}
-
-	if (!KMPCalculateDFA(pattern, patternLen, &dfa)) {
-		free(dfa);
-		return ERROR;
-	}
-
+	KMPComputePrefix(pattern, patternLen, dfa);
 	int k = -1;
-	for (int i = 0; i < textLen; ++i) {
-		while (k > -1 && text[i] != pattern[k + 1]) {
+	for (int i = 0; i < sourceLen; ++i) {
+		while (k > -1 && source[i] != pattern[k + 1]) {
 			k = dfa[k];
 		}
-		if (text[i] == pattern[k + 1]) {
+		if (source[i] == pattern[k + 1]) {
 			++k;
 		}
 		if (k == patternLen - 1) {
 			free(dfa);
-			return i - k;
+			return i - k + start;
 		}
 	}
 	free(dfa);
@@ -179,9 +171,7 @@ static int KMP(const char* text, int textLen, const char* pattern, int patternLe
 }
 
 int RemoveString(char* text, int start, int count) {
-
-	const int ERROR = -2;
-
+	
 	if (!text) {
 		errno = EINVAL;
 		return ERROR;
@@ -197,7 +187,16 @@ int RemoveString(char* text, int start, int count) {
 		return ERROR;
 	}
 
-	size_t textLen = strlen(text);
+	size_t textLenUnsigned = strlen(text);
+	
+	// we choose to not support strings of length
+	// greater than INT_MAX
+	if (textLenUnsigned > (size_t)INT_MAX) {
+		errno = EDOM;
+		return ERROR;
+	}
+
+	int textLen = (int)textLenUnsigned;
 
 	if (start + count > textLen) {
 		errno = EINVAL;
@@ -225,3 +224,121 @@ int RemoveString(char* text, int start, int count) {
 	return 0;
 }
 
+int InsertString(const char* source, 
+	const char* insert, 
+	int index, 
+	char* OutResult) 
+{
+	if (!source || !index || !OutResult) {
+		errno = EINVAL;
+		return ERROR;
+	}
+	if (index < 0) {
+		errno = EINVAL;
+		return ERROR;
+	}
+
+	size_t sourceLen = strlen(source);
+	size_t insertLen = strlen(insert);
+
+	// we choose to not support strings of length
+	// greater than INT_MAX
+	if (sourceLen + insertLen > (size_t)INT_MAX) {
+		errno = EDOM;
+		return ERROR;
+	}
+
+	strncpy(&OutResult[0], &source[0], index);
+	strncpy(&OutResult[index], &insert[0], insertLen);
+	strncpy(&OutResult[index + insertLen], &source[index], sourceLen - index);
+	OutResult[sourceLen + insertLen] = '\0';
+	
+	return (int)(sourceLen + insertLen);
+}
+
+int FindSubstring(const char* source, 
+	const char* substring, 
+	int start) 
+{
+
+	if (!source || !substring) {
+		errno = EINVAL;
+		return ERROR;
+	}
+	if (start < 0) {
+		errno = EINVAL;
+		return ERROR;
+	}
+	return KMP(source, start, strlen(source), substring, strlen(substring));
+}
+
+int ReplaceFirstSubstring(const char* source,
+	const char* target,
+	const char* replac,
+	char* OutResult)
+{
+	
+	if (!source || !target || !replac || !OutResult) {
+		errno = EINVAL;
+		return ERROR;
+	}
+
+	int sourceLen = strlen(source);
+	int targetLen = strlen(target);
+	int replacLen = strlen(replac);
+	int start = 0;
+
+	int i = FindSubstring(source, target, start);
+	
+	if (i >= 0) {
+		strncpy(OutResult, source, i);
+		strncpy(&OutResult[i], replac, replacLen);
+		strncpy(&OutResult[i + replacLen], 
+				&source[i + targetLen], 
+				sourceLen - i - targetLen + 1);
+		return 1;
+	}
+	strncpy(OutResult, source, sourceLen + 1);
+	return 0;
+}
+
+int ReplaceAllSubstrings(const char* source, 
+	const char* target, 
+	const char* replac, 
+	char* OutResult) 
+{
+	
+	if (!source || !target || !replac || !OutResult) {
+		errno = EINVAL;
+		return ERROR;
+	}
+
+	int i = -1;
+	int j = 0;
+	int replCount = 0;
+	int resultLen = 0;
+	int sourceLen = strlen(source);
+	int targetLen = strlen(target);
+	int replacLen = strlen(replac);
+	while ( (i = FindSubstring(source, target, i + 1) ) >= 0) {
+		
+		strncpy(&OutResult[resultLen], &source[j], i - j);
+		resultLen += i - j;
+		
+		strncpy(&OutResult[resultLen], replac, replacLen);
+		resultLen += replacLen;
+
+		++replCount;
+		j = i + targetLen;
+	}
+	if (resultLen > 0) {
+		strncpy(&OutResult[resultLen], &source[j], sourceLen - j);
+		resultLen += sourceLen - j;
+		OutResult[resultLen] = '\0';
+	} else {
+		// if no substrings were found to replace, copy the
+		// whole source and append a null terminating char 
+		strncpy(OutResult, source, sourceLen + 1);
+	}
+	return replCount;
+}
