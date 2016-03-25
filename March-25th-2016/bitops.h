@@ -27,8 +27,8 @@
 #define ROTL(type, value, resultVarName)	\
 	do {									\
 		int bcount = 0;						\
-		BIT_SIZE(type, bcount);				\
-		resultVarName = (((value >> (bcount - 1)) & 1) | (value << 1)); \
+		BIT_SIZE((type), (bcount));			\
+		resultVarName = ((((value) >> ((bcount) - 1)) & 1) | ((value) << 1)); \
 	} while (0)
 
 // ditto, ROTR
@@ -37,14 +37,14 @@
 #define ROTR(type, value, resultVarName)	\
 	do {									\
 		int bcount = 0;						\
-		BIT_SIZE(type, bcount);				\
-		resultVarName = ((value >> 1) & ~((1 << (bcount - 1)))) | (value << (bcount - 1));	\
+		BIT_SIZE((type), (bcount));			\
+		resultVarName = (((value) >> 1) & ~((1 << ((bcount) - 1)))) | ((value) << ((bcount) - 1));	\
 	} while (0)
 
 // returns true if all ON bits in the bitPattern
 // are ON in the value as well
 #define HAS_ALL_BITS_ON(value, bitPattern) \
-	((value & bitPattern) == (value))
+	(((value) & (bitPattern)) == (value))
 
 // returns true if the bit at position bitPos
 // is ON in the value
@@ -52,7 +52,7 @@
 // i.e. first bit position is at 0, second at 1,
 // and so on
 #define IS_BIT_ON(value, bitPos) \
-	(value & (1 << bitPos))
+	((value) & (1 << (bitPos)))
 
 // extracts bitCount bits starting at bitPos in the 
 // value, returns the bits with the first bit that
@@ -67,7 +67,7 @@
 //
 // implemented as a macro
 #define EXTRACT_BITS(value, bitPos, bitCount) \
-	((value & (((1 << bitCount) - 1) << bitPos)) >> bitPos)
+	(((value) & (((1 << (bitCount)) - 1) << (bitPos))) >> (bitPos))
 
 // takes bits from bitPattern starting at position bitPos
 // in the number of bitCount, and sets these bits in the
@@ -75,12 +75,12 @@
 // 
 // implemented as a macro
 #define SET_BITS(value, bitPattern, bitPos, bitCount) \
-	(value | (bitPattern & (((1 << bitCount) - 1) << bitPos)))
+	((value) | ((bitPattern) & (((1 << (bitCount)) - 1) << (bitPos))))
 
 // return the bit position of a bit pattern in 
 // value or -1 if no such bit pattern is present
 // in the value
-inline int FindBitPattern(int value, int bitPattern) {
+static inline int FindBitPattern(int value, int bitPattern) {
 	
 	const int NOT_FOUND = -1;
 
