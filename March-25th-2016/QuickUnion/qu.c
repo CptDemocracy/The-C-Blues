@@ -3,6 +3,9 @@
 // in his course on algorithms:
 // [ref.] coursera.org/course/algs4partI
 
+#include <string.h>
+#include <stdlib.h>
+#include <stdio.h>
 #include "qu.h"
 
 int QuickUnionNew(struct QuickUnion* qu, int size) {
