@@ -1,6 +1,8 @@
 #ifndef ROT_H
 #define ROT_H
 
+#include <stdint.h>
+
 
 uint64_t ROTR64U(uint64_t uword64);
 
