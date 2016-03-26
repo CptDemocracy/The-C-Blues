@@ -60,7 +60,7 @@ int main(int argc, const char** argv) {
 			printf("%s\n", INPUT_TOO_SHORT_MSG);
 		}
 		else {
-			printf("%s\n", buffer);
+			printf("%s\n", buffer); 
 		}		
 	}
 
