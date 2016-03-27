@@ -9,7 +9,8 @@
  handle quoted strings and character constants properly. C comments don't nest.
 */
 
-#define BUFFER_INIT_CAPACITY 128
+#define BUFFER_INIT_CAPACITY	128
+#define COMMENT_TAG_PAIRS		2
 
 int FileExists(const char* path) 
 {
@@ -23,34 +24,22 @@ int FileExists(const char* path)
 	return 1;
 }
 
-int main(int argc, const char** argv) {
-
-	if (argc < 3) {
-		fprintf(stderr, "Usage: ./removeComments source destination.\n");
+int ClearTagsInFile(FILE* from,
+	FILE* to,
+	const char* startTag, 
+	const char* endTag) 
+{
+	if (!from		||
+		!to			||
+		!startTag	|| 
+		!endTag) 
+	{
+		errno = EINVAL;
 		return 1;
-	}
-
-	FILE* from = fopen(argv[1], "r");
-	if (!from) {
-		fprintf(stderr, "Error opening file \"%s\"", argv[1]);
-		return 2;
-	}
-
-	if (FileExists(argv[2])) {
-		fprintf(stderr, "Destination file with the same name already exists in the directory.\n");
-		return 3;
-	}
-
-	FILE* to = fopen(argv[2], "w");
-	if (!to) {
-		fprintf(stderr, "Error creating a destination file.\n");
-	}
+	}	
 	
-	const char* COMMENT_START_TAG = "/*";
-	const char* COMMENT_END_TAG = "*/";
-
-	const size_t COMMENT_START_TAG_LEN = strlen(COMMENT_START_TAG);
-	const size_t COMMENT_END_TAG_LEN = strlen(COMMENT_END_TAG);
+	const size_t COMMENT_START_TAG_LEN = strlen(startTag);
+	const size_t COMMENT_END_TAG_LEN = strlen(endTag);
 
 	size_t bufferCapacity = BUFFER_INIT_CAPACITY;
 	char* buffer = (char*)malloc(sizeof(char) * BUFFER_INIT_CAPACITY);
@@ -82,7 +71,7 @@ int main(int argc, const char** argv) {
 				buffer = (char*)realloc(buffer, bufferCapacity);
 				if (!buffer) {
 					errno = ENOMEM;
-					return 1;
+					return 2;
 				}
 			}
 			buffer[bufferCount] = c;
@@ -96,14 +85,15 @@ int main(int argc, const char** argv) {
 		while (i < bufferCount) {
 			if (inComment && 
 				i <= bufferCount - COMMENT_END_TAG_LEN &&
-				(strncmp(&buffer[i], COMMENT_END_TAG, COMMENT_END_TAG_LEN) == 0)) 
+				(strncmp(&buffer[i], endTag, COMMENT_END_TAG_LEN) == 0)) 
 			{
 				i += COMMENT_END_TAG_LEN;
 				inComment = 0;
+				fputc('\n', to);
 			}
 			else if (!inComment &&
 					  i <= bufferCount - COMMENT_START_TAG_LEN &&
-					  (strncmp(&buffer[i], COMMENT_START_TAG, COMMENT_START_TAG_LEN) == 0))
+					  (strncmp(&buffer[i], startTag, COMMENT_START_TAG_LEN) == 0))
 			{
 				inComment = 1;
 				i += COMMENT_START_TAG_LEN;
@@ -117,6 +107,50 @@ int main(int argc, const char** argv) {
 
 	free(buffer);
 	buffer = NULL;
+
+	rewind(to);
+	rewind(from);
+	
+	return 0;
+}
+
+
+int main(int argc, const char** argv) {
+
+	if (argc < 3) {
+		fprintf(stderr, "Usage: ./removeComments source destination.\n");
+		return 1;
+	}
+
+	FILE* from = fopen(argv[1], "r");
+	if (!from) {
+		fprintf(stderr, "Error opening file \"%s\"", argv[1]);
+		return 2;
+	}
+
+	if (FileExists(argv[2])) {
+		fprintf(stderr, "Destination file with the same name already exists in the directory.\n");
+		return 3;
+	}
+
+	FILE* to = fopen(argv[2], "w");
+	if (!to) {
+		fprintf(stderr, "Error creating a destination file.\n");
+		return 4;
+	}
+	
+	FILE* tmpf = tmpfile();
+	if (!tmpf) {
+		fprintf(stderr, "Error creating a temporary file.\n");
+		return 5;
+	}
+	
+	ClearTagsInFile(from, tmpf, "/*", "*/");
+	ClearTagsInFile(tmpf, to, "//", "\n");
+
+	fclose(tmpf);
+	fclose(from);
+	fclose(to);
 
 	return 0;
 }
