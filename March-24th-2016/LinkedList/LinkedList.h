@@ -6,31 +6,31 @@
 struct LinkedList;
 
 struct LinkedListNode {
-	struct LinkedListNode* next;
-	struct LinkedListNode* prev;
-	void*  item;
-	const struct LinkedList* _owner;
+    struct LinkedListNode* next;
+    struct LinkedListNode* prev;
+    void*  item;
+    const struct LinkedList* _owner;
 };
 
 static int LinkedListNodeNew(struct LinkedListNode* self, 
-	const struct LinkedList* owner, 
-	const void* item, 
-	struct LinkedListNode* next, 
-	struct LinkedListNode* prev);
+    const struct LinkedList* owner, 
+    const void* item, 
+    struct LinkedListNode* next, 
+    struct LinkedListNode* prev);
 
 static void LinkedListNodeDispose(struct LinkedListNode* self);
 
-struct LinkedList {	
-	struct LinkedListNode* _first;
-	struct LinkedListNode* _last;
-	size_t _itemSize;
-	size_t _count;
-	void ( *_dispose)(void*);
+struct LinkedList {    
+    struct LinkedListNode* _first;
+    struct LinkedListNode* _last;
+    size_t _itemSize;
+    size_t _count;
+    void ( *_dispose)(void*);
 };
 
 int LinkedListNew(struct LinkedList* self, 
-	size_t itemSize, 
-	void (*dispose)(void*));
+    size_t itemSize, 
+    void (*dispose)(void*));
 
 int LinkedListAddFirst(struct LinkedList* self, const void* item);
 
