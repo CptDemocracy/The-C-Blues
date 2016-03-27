@@ -5,7 +5,7 @@
 // with Lazy initialization.
 
 struct Singleton {
-	int* ptr;
+    int* ptr;
 };
 
 void SingletonInitialize(void);
