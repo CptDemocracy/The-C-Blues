@@ -8,21 +8,21 @@
 
 int main(int argc, const char** argv) {
 
-	char c;
+    char c;
 
-	while (1)
-	{
-		printf(">>> ");
-	
-		while ( (c = getchar()) != '\n') {
-			if (isspace(c)) {
-				putchar('\n');	
-			} else {
-				putchar(c);
-			}
-		}
-		putchar('\n');
-	}
+    while (1)
+    {
+        printf(">>> ");
+    
+        while ( (c = getchar()) != '\n') {
+            if (isspace(c)) {
+                putchar('\n');    
+            } else {
+                putchar(c);
+            }
+        }
+        putchar('\n');
+    }
 
-	return 0;
+    return 0;
 }
