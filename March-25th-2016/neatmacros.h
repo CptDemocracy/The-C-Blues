@@ -19,27 +19,27 @@
 // experimental 
 // for practical purposes, please consider using
 // toupper(int) function from <ctype.h>
-#define ASCII_TO_UPPER(str) \
-    { \
-        char* pChar = (str); \
-        while (*pChar)    \
-        {    \
+#define ASCII_TO_UPPER(str)     \
+    {                           \
+        char* pChar = (str);    \
+        while (*pChar)          \
+        {                       \
             *pChar = ASCII_IS_LOWER_CASE(*pChar) ? (*pChar - (char)' ') : (*pChar);    \
-            ++pChar;    \
-        }    \
+            ++pChar;            \
+        }                       \
     }
 
 // ASCII_TO_LOWER macro
 // experimental 
 // for practical purposes, please consider using
 // tolower(int) function from <ctype.h>
-#define ASCII_TO_LOWER(str) \
+#define ASCII_TO_LOWER(str)     \
     { \
-        char *pChar = (str); \
-        while (*pChar)    \
+        char *pChar = (str);    \
+        while (*pChar)          \
         {    \
             *pChar = ASCII_IS_UPPER_CASE(*pChar) ? (*pChar + (char)' ') : (*pChar); \
-            ++pChar;    \
+            ++pChar;            \
         }    \
     }
 
