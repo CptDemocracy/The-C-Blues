@@ -92,7 +92,27 @@ int main(int argc, const char** argv) {
 		}
 		buffer[bufferCount] = 0;
 		
-		// parsing logic here
+		size_t i = 0;
+		while (i < bufferCount) {
+			if (inComment && 
+				i <= bufferCount - COMMENT_END_TAG_LEN &&
+				(strncmp(&buffer[i], COMMENT_END_TAG, COMMENT_END_TAG_LEN) == 0)) 
+			{
+				i += COMMENT_END_TAG_LEN;
+				inComment = 0;
+			}
+			else if (!inComment &&
+					  i <= bufferCount - COMMENT_START_TAG_LEN &&
+					  (strncmp(&buffer[i], COMMENT_START_TAG, COMMENT_START_TAG_LEN) == 0))
+			{
+				inComment = 1;
+				i += COMMENT_START_TAG_LEN;
+			}
+			else {
+				if (!inComment) fputc(buffer[i], to);
+				++i;
+			}
+		}
 	}
 
 	free(buffer);
