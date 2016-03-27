@@ -9,6 +9,8 @@
  handle quoted strings and character constants properly. C comments don't nest.
 */
 
+#define BUFFER_INIT_CAPACITY 128
+
 int FileExists(const char* path) 
 {
 	if (!path) {
@@ -43,11 +45,58 @@ int main(int argc, const char** argv) {
 	if (!to) {
 		fprintf(stderr, "Error creating a destination file.\n");
 	}
+	
+	const char* COMMENT_START_TAG = "/*";
+	const char* COMMENT_END_TAG = "*/";
 
-	// parsing logic wip
+	const size_t COMMENT_START_TAG_LEN = strlen(COMMENT_START_TAG);
+	const size_t COMMENT_END_TAG_LEN = strlen(COMMENT_END_TAG);
 
-	fclose(to);
-	fclose(from);	
+	size_t bufferCapacity = BUFFER_INIT_CAPACITY;
+	char* buffer = (char*)malloc(sizeof(char) * BUFFER_INIT_CAPACITY);
+	if (!buffer) {
+		errno = ENOMEM;
+		return 1;
+	}
+
+	size_t bufferCount = 0;
+	int isEOF = 0;
+	int inComment = 0;
+
+	char c = 0;
+
+	while (!isEOF)
+	{
+		bufferCount = 0;
+
+		while (1) {		
+			c = fgetc(from);
+			if (c == EOF) {
+				isEOF = 1;
+				break;
+			}
+			if (bufferCount >= bufferCapacity - 1) 
+			{
+				// a safeguard in case someone accidentally changes bufferCapacity to 0
+				bufferCapacity = (bufferCapacity > 0) ? bufferCapacity * 2 : BUFFER_INIT_CAPACITY;
+				buffer = (char*)realloc(buffer, bufferCapacity);
+				if (!buffer) {
+					errno = ENOMEM;
+					return 1;
+				}
+			}
+			buffer[bufferCount] = c;
+			++bufferCount;
+			
+			if (c == '\n') break;
+		}
+		buffer[bufferCount] = 0;
+		
+		// parsing logic here
+	}
+
+	free(buffer);
+	buffer = NULL;
 
 	return 0;
 }
