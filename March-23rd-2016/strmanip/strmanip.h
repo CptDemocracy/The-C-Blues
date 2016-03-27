@@ -9,7 +9,7 @@ int KMP(const char* source,
 
 int* KMPCalculateDFA(const char* pattern, 
 	int patternLen, 
-	int** pOutResultDFA);
+	int* OutResultDFA);
 
 int CountWords(const char* text);
 
