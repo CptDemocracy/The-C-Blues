@@ -5,11 +5,11 @@
 #include <errno.h>
 
 struct Vector {
-	void*  _items;
-	size_t _itemSize;
-	size_t _capacity;
-	size_t _itemCount;
-	int (*DisposeFn)(void*);
+    void*  _items;
+    size_t _itemSize;
+    size_t _capacity;
+    size_t _itemCount;
+    int (*DisposeFn)(void*);
 };
 
 int VectorNew(struct Vector*, size_t itemSize, int (*DisposeFn)(void*));
