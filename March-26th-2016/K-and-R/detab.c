@@ -19,23 +19,23 @@
 
 int main(int argc, const char** argv) {
 
-	int count = 0;
-	char c = 0;
+    int count = 0;
+    char c = 0;
 
-	while (1) {
-		count = 0;
-		printf(">>> ");
-		while ( (c = getchar()) != '\n') {
-			if (c == '\t') {
-				for (int i = 0; i < CHARS_PER_TAB_STOP - count; ++i) {
-					putchar(' ');
-				}
-			}
-			putchar(c);
-			count = (count + 1) % CHARS_PER_TAB_STOP;
-		}
-		putchar('\n');
-	}
+    while (1) {
+        count = 0;
+        printf(">>> ");
+        while ( (c = getchar()) != '\n') {
+            if (c == '\t') {
+                for (int i = 0; i < CHARS_PER_TAB_STOP - count; ++i) {
+                    putchar(' ');
+                }
+            }
+            putchar(c);
+            count = (count + 1) % CHARS_PER_TAB_STOP;
+        }
+        putchar('\n');
+    }
 
-	return 0;
+    return 0;
 }
