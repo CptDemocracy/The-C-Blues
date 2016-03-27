@@ -1,11 +1,11 @@
 #define DEBUG
 
 #ifdef DEBUG
-	#define _CRTDBG_MAP_ALLOC
-	#include <crtdbg.h>
-	#include <stdlib.h>
+    #define _CRTDBG_MAP_ALLOC
+    #include <crtdbg.h>
+    #include <stdlib.h>
 #else
-	#include <stdlib.h>
+    #include <stdlib.h>
 #endif
 
 #include <string.h>
@@ -19,38 +19,38 @@
 char CHAR_BUFFER[CHAR_BUFFER_SIZE];
 
 void CustomDisposeFn(double* item) {
-	free(item);
+    free(item);
 }
 
 int main(void) {
-	
-	struct LinkedList listOfDoubles = { 0 };
-	LinkedListNew(&listOfDoubles, sizeof(double), CustomDisposeFn);
-	
-	double i = 0.0;
-	for (i = 5.0; i >= 0.0; --i) {
-		LinkedListAddFirst(&listOfDoubles, &i);
-	}
-	for (i = 5.0; i >= 0.0; --i) {
-		LinkedListAddLast(&listOfDoubles, &i);
-	}
-	LinkedListRemoveFirst(&listOfDoubles);
-	LinkedListRemoveLast(&listOfDoubles);
+    
+    struct LinkedList listOfDoubles = { 0 };
+    LinkedListNew(&listOfDoubles, sizeof(double), CustomDisposeFn);
+    
+    double i = 0.0;
+    for (i = 5.0; i >= 0.0; --i) {
+        LinkedListAddFirst(&listOfDoubles, &i);
+    }
+    for (i = 5.0; i >= 0.0; --i) {
+        LinkedListAddLast(&listOfDoubles, &i);
+    }
+    LinkedListRemoveFirst(&listOfDoubles);
+    LinkedListRemoveLast(&listOfDoubles);
 
-	const struct LinkedListNode* pLast = LinkedListGetFirst(&listOfDoubles);
-	const struct LinkedListNode* pNode = LinkedListGetLast(&listOfDoubles);
-	while (pNode != pLast) {
-		printf("%.1lf ", *(double*)pNode->item);
-		pNode = pNode->prev;
-	}
-	printf("\n");
+    const struct LinkedListNode* pLast = LinkedListGetFirst(&listOfDoubles);
+    const struct LinkedListNode* pNode = LinkedListGetLast(&listOfDoubles);
+    while (pNode != pLast) {
+        printf("%.1lf ", *(double*)pNode->item);
+        pNode = pNode->prev;
+    }
+    printf("\n");
 
-	LinkedListDispose(&listOfDoubles);
+    LinkedListDispose(&listOfDoubles);
 
 #ifdef DEBUG
-	_CrtDumpMemoryLeaks();
+    _CrtDumpMemoryLeaks();
 #endif
 
-	getchar();
-	return 0;
+    getchar();
+    return 0;
 }
