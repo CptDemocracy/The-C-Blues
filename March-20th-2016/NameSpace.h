@@ -6,9 +6,9 @@
 struct NameSpace {
 	void   (*PrintName)  (const char*, FILE*);
 	double (*ReadDouble) (FILE*, void(*)(void));	
-	int	   (*CountWords) (FILE*);
-	int	   (*IsWordIn)	 (FILE*, int(*)(const char*));
-	int	   (*IsPrime)	 (long);
+	int    (*CountWords) (FILE*);
+	int    (*IsWordIn)   (FILE*, int(*)(const char*));
+	int    (*IsPrime)    (long);
 } const ns;
 
 #endif /* NAMESPACE_H */
