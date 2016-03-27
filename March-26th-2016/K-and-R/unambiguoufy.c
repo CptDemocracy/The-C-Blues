@@ -10,31 +10,31 @@
 
 int main(int argc, const char** argv) {
 
-	char c;
+    char c;
 
-	while (1)
-	{
-		printf(">>> ");
+    while (1)
+    {
+        printf(">>> ");
 
-		while ( (c = getchar()) != '\n') {
-			switch (c) {
-				case '\t':
-					printf("\\t");
-					break;
-				case '\b':
-					printf("\\b");
-					break;
-				case '\\':
-					printf("\\\\");
-					break;
-				default:
-					putchar(c);
-					break;
-			}
-		}
-		putchar('\n');
+        while ( (c = getchar()) != '\n') {
+            switch (c) {
+                case '\t':
+                    printf("\\t");
+                    break;
+                case '\b':
+                    printf("\\b");
+                    break;
+                case '\\':
+                    printf("\\\\");
+                    break;
+                default:
+                    putchar(c);
+                    break;
+            }
+        }
+        putchar('\n');
 
-	}
+    }
 
-	return 0;
+    return 0;
 }
