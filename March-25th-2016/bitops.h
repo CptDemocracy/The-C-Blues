@@ -8,11 +8,11 @@
 
 // count the number of bits in an integer
 // implemented as a macro
-#define BIT_SIZE(type, resultVarName)          	\
-    do {                        		\
-            type x = (type)1;        		\
-            resultVarName = 1;        		\
-            while(x <<= 1) ++resultVarName; 	\
+#define BIT_SIZE(type, resultVarName)       \
+    do {                                    \
+            type x = (type)1;               \
+            resultVarName = 1;              \
+            while(x <<= 1) ++resultVarName; \
     } while (0)
 
 // show us if given type is signed
@@ -24,20 +24,20 @@
 // as a macro
 // NOTE, signed or not, this implementation works both for logical right shifts
 // and arithmetic right shifts
-#define ROTL(type, value, resultVarName)        \
-    do {                        		\
-        int bcount = 0;                		\
-        BIT_SIZE((type), (bcount));        	\
+#define ROTL(type, value, resultVarName)       \
+    do {                                       \
+        int bcount = 0;                        \
+        BIT_SIZE((type), (bcount));            \
         resultVarName = ((((value) >> ((bcount) - 1)) & 1) | ((value) << 1)); \
     } while (0)
 
 // ditto, ROTR
 // NOTE, signed or not, this implementation works both for logical right shifts
 // and arithmetic right shifts
-#define ROTR(type, value, resultVarName)        \
-    do {                        		\
-        int bcount = 0;                		\
-        BIT_SIZE((type), (bcount));        	\
+#define ROTR(type, value, resultVarName)       \
+    do {                                       \
+        int bcount = 0;                        \
+        BIT_SIZE((type), (bcount));            \
         resultVarName = (((value) >> 1) & ~((1 << ((bcount) - 1)))) | ((value) << ((bcount) - 1)); \
     } while (0)
 
