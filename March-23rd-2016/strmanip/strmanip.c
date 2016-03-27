@@ -152,7 +152,7 @@ int KMP(const char* source,
 		errno = ENOMEM;
 		return ERROR;
 	}
-	KMPComputePrefix(pattern, patternLen, dfa);
+	KMPCalculateDFA(pattern, patternLen, dfa);
 	int k = -1;
 	for (int i = 0; i < sourceLen; ++i) {
 		while (k > -1 && source[i] != pattern[k + 1]) {
