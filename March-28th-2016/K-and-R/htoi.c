@@ -59,7 +59,15 @@ int htoi(const char* hex) {
 
     size_t bitpos = 0;
     while (pchar >= pbegin) {
-        num += (*pchar - '0') * (1 << (4 * bitpos));
+        int digit = *pchar - '0';
+
+        // if overflown
+        if (num + digit * (1 << (4 * bitpos)) < num) {            
+            errno = ERANGE;
+            return 0;
+        }
+
+        num += digit * (1 << (4 * bitpos));
         ++bitpos;
         --pchar;
     }
@@ -80,10 +88,9 @@ int htoi(const char* hex) {
 
 int main(void)
 {
-
-    printf("%d\n", htoi("0x80")); // good
-    printf("%d\n", htoi("x80"));  // good
-    printf("%d\n", htoi("80"));   // error
+    printf("%d\n", htoi("0x80"));
+    printf("%d\n", htoi("x80"));
+    printf("%d\n", htoi("80"));
 
     getchar();
     return 0;
