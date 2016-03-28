@@ -9,82 +9,82 @@
 #include <ctype.h>
 
 int htoi(const char* hex) {
-	
-	if (!hex) {
-		errno = EINVAL;
-		return 0;
-	}
+    
+    if (!hex) {
+        errno = EINVAL;
+        return 0;
+    }
 
-	int num  = 0;
-	int sign = 1;
-	const char* pbegin = &hex[0];
+    int num  = 0;
+    int sign = 1;
+    const char* pbegin = &hex[0];
 
-	// skip whitespace	
-	while (isspace(*pbegin)) ++pbegin;
+    // skip whitespace    
+    while (isspace(*pbegin)) ++pbegin;
 
-	if (*pbegin != 'x' && *pbegin != 'X' && *pbegin != '0' && *pbegin != '-') {
-		errno = EINVAL;
-		return 0;
-	}
+    if (*pbegin != 'x' && *pbegin != 'X' && *pbegin != '0' && *pbegin != '-') {
+        errno = EINVAL;
+        return 0;
+    }
 
-	if (*pbegin == '-') {
-		sign = -sign;
-		++pbegin;
-	}
-	else if (*pbegin == 'x' || *pbegin == 'X') {
-		++pbegin;
-	}
-	else if (*pbegin == '0') {
-		++pbegin;
-		if (*pbegin != 'x' && *pbegin != 'X') {
-			errno = EINVAL;
-			return 0;
-		}
-		++pbegin;
-	}
+    if (*pbegin == '-') {
+        sign = -sign;
+        ++pbegin;
+    }
+    else if (*pbegin == 'x' || *pbegin == 'X') {
+        ++pbegin;
+    }
+    else if (*pbegin == '0') {
+        ++pbegin;
+        if (*pbegin != 'x' && *pbegin != 'X') {
+            errno = EINVAL;
+            return 0;
+        }
+        ++pbegin;
+    }
 
-	// locate the end of the literal and  
-	// validate characters at the same time
-	const char* pend = pbegin;
-	while (*pend && !isblank(*pend)) {
-		if (!isxdigit(*pend)) {
-			errno = EINVAL;
-			return 0;
-		}
-		++pend;
-	}
+    // locate the end of the literal and  
+    // validate characters at the same time
+    const char* pend = pbegin;
+    while (*pend && !isblank(*pend)) {
+        if (!isxdigit(*pend)) {
+            errno = EINVAL;
+            return 0;
+        }
+        ++pend;
+    }
 
-	// parse the value
-	const char* pchar = pend - 1;
+    // parse the value
+    const char* pchar = pend - 1;
 
-	size_t bitpos = 0;
-	while (pchar >= pbegin) {
-		num += (*pchar - '0') * (1 << (4 * bitpos));
-		++bitpos;
-		--pchar;
-	}
+    size_t bitpos = 0;
+    while (pchar >= pbegin) {
+        num += (*pchar - '0') * (1 << (4 * bitpos));
+        ++bitpos;
+        --pchar;
+    }
 
-	// iterate until the end of the string
-	// if found anything but blanks, throw 
-	// error
-	while (*pend) {
-		if (!isspace(*pend)) {
-			errno = EINVAL;
-			return num;
-		}
-		++pend;
-	}
+    // iterate until the end of the string
+    // if found anything but blanks, throw 
+    // error
+    while (*pend) {
+        if (!isspace(*pend)) {
+            errno = EINVAL;
+            return num;
+        }
+        ++pend;
+    }
 
-	return num;
+    return num;
 }
 
 int main(void)
 {
 
-	printf("%d\n", htoi("0x80")); // good
-	printf("%d\n", htoi("x80"));  // good
-	printf("%d\n", htoi("80"));   // error
+    printf("%d\n", htoi("0x80")); // good
+    printf("%d\n", htoi("x80"));  // good
+    printf("%d\n", htoi("80"));   // error
 
-	getchar();
-	return 0;
+    getchar();
+    return 0;
 }
