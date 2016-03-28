@@ -4,21 +4,21 @@
 #include <stdlib.h>
 
 struct Stack {
-	void*  _items;
+    void*  _items;
 
-	// item size in bytes
-	size_t _itemSize;
+    // item size in bytes
+    size_t _itemSize;
 
-	// item count in items, NOT bytes
-	size_t _count;
+    // item count in items, NOT bytes
+    size_t _count;
 
-	// capacity in items, NOT bytes
-	size_t _capacity; 
+    // capacity in items, NOT bytes
+    size_t _capacity; 
 
-	// if NULL, standard free(void*) is used
-	// frees contents of items but NOT the items
-	// themselves
-	void (*_disposeFn)(void*);
+    // if NULL, standard free(void*) is used
+    // frees contents of items but NOT the items
+    // themselves
+    void (*_disposeFn)(void*);
 };
 
 int StackNew(struct Stack* self, size_t itemSize, void (*disposeFn)(void*));
