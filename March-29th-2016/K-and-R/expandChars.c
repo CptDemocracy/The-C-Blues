@@ -19,6 +19,15 @@ int main(void) {
     const char* str = "0-9";
     Expand(buffer, 256, str);
     printf("%s.\n", buffer);
+    
+    /*
+    should pass the following test:
+    
+     char buffer[256]; // = { 0 };
+     const char* str = "--a-c-e0-9A-C-E-";
+     Expand(buffer, 256, str);
+     printf("%s.\n", buffer);
+    */
 
     getchar();
     return 0;
