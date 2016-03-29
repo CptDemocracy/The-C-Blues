@@ -31,7 +31,7 @@ int Escape(const char* str, char* OutResult, size_t OutResultLen) {
     }
     size_t i = 0; 
     size_t j = 0;
-    while (str[i] != '\0' && j < OutResultLen) {
+    while (str[i] != '\0' && j < OutResultLen - 1) {
         switch (str[i]) {
             case '\a': case '\b': case '\f':
             case '\n': case '\r': case '\t':
@@ -75,6 +75,7 @@ int Escape(const char* str, char* OutResult, size_t OutResultLen) {
         ++i;
         ++j;
     }
+    OutResult[j] = '\0';
     return 0;
 }
 
@@ -85,8 +86,8 @@ int Unescape(const char* str, char* OutResult, size_t OutResultLen) {
     }
     size_t i = 0; 
     size_t j = 0;
-    while (str[i] != '\0' && j < OutResultLen) {
-        if (str[i] == '\\' && j < OutResultLen - 1) {
+    while (str[i] != '\0' && j < OutResultLen - 1) {
+        if (str[i] == '\\' && j < OutResultLen - 2) {
             ++i;
             switch (str[i]) {
                 case 'a':
@@ -120,5 +121,6 @@ int Unescape(const char* str, char* OutResult, size_t OutResultLen) {
         ++i;
         ++j;
     }
+    OutResult[j] = '\0';
     return 0;
 }
