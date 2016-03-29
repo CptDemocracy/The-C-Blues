@@ -1,12 +1,12 @@
+#include <stdio.h>
+#include <errno.h>
+#include <ctype.h>
+
 /* K&R C (Dennis M. Ritchie & Brian W. Kernighan)
  Exercise 2-3. Write a function htoi(s), which converts a string of hexadecimal digits
  (including an optional 0x or 0X) into its equivalent integer value. The allowable digits are 0
  through 9, a through f, and A through F.
 */
-
-#include <stdio.h>
-#include <errno.h>
-#include <ctype.h>
 
 int htoi(const char* hex) {
     
