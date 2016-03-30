@@ -11,92 +11,112 @@
  leading or trailing - is taken literally.
 */
 
-int Expand(char* buffer, size_t bufferLen, const char* str);
+#define BUFFER_SIZE 64
+
+void Expand(char* buffer, size_t bufferLen, const char* str);
+
+void ExpandHelper(char* buffer, size_t bufferLen, const char* str);
 
 int main(void) {
 
-    char buffer[256]; // = { 0 };
-    const char* str = "0-9";
-    Expand(buffer, 256, str);
-    printf("%s.\n", buffer);
+	char buffer[BUFFER_SIZE] = { 0 };
+	
+    // const char* str = "--a-c-e0-9A-C-E-";
     
-    /*
-    should pass the following test:
-    
-     char buffer[256]; // = { 0 };
-     const char* str = "--a-c-e0-9A-C-E-";
-     Expand(buffer, 256, str);
-     printf("%s.\n", buffer);
-    */
+	// const char* str = "a-b-c";
+	
+	// const char* str = "---a-zA-Z---";
 
-    getchar();
-    return 0;
+	const char* str = "a-z0-9";
+
+	Expand(buffer, BUFFER_SIZE, str);
+    printf("%s.\n", buffer);
+
+	getchar();
+
+	return 0;
 }
 
-int Expand(char* buffer, size_t bufferLen, const char* str) {
-    if (!buffer || bufferLen == 0 || !str) {
-        errno = EINVAL;
-        return EINVAL;
-    }
-    
-    const char* pchar = &str[0];
+void Expand(char* buffer, size_t bufferLen, const char* str) {
+	
+	if (!buffer || bufferLen == 0 || !str) {
+		errno = EINVAL;
+		return;
+	}
 
-    // skip whitespace
-    while (isblank(*pchar)) ++pchar;
+	static const SEPARATOR = '-';
+	
+	size_t i = 0;
+	const char* pchar = &str[0];
 
-    // if not alnum, report error
-    if (!isalnum(*pchar)) {
-        errno = EINVAL;
-        return EINVAL;
-    }
+	// skip whitespace at the beginning of the string
+	while (isblank(*pchar)) ++pchar;
 
-    char start = *pchar;
-    ++pchar;
+	// add leading dashes
+	while (*pchar == SEPARATOR) {
+		if (!(i < bufferLen - 1)) { 
+			return; 
+		}
+		buffer[i] = *pchar;
+		++pchar;
+		++i;
+	}
 
-    if (*pchar != '-') {
-        errno = EINVAL;
-        return EINVAL;
-    }
+	ExpandHelper(&buffer[i], bufferLen - i, pchar);
 
-    ++pchar;
-    
-    // at this point one might be wondering why we 
-    // are not testing for the null terminating char,
-    // the truth is we don't really have to, since
-    // the null terminating character won't pass
-    // checks for alnum and equality with the dash
-    // character
-    if (!isalnum(*pchar)) {
-        errno = EINVAL;
-        return EINVAL;
-    }
+	// add trailing dashes
+	i = strlen(buffer);
+	size_t strLen = strlen(str);
+	for (size_t j = strLen; 
+		j > 0 && 
+		i < bufferLen - 1 && 
+		str[j - 1] == SEPARATOR; 
+		--j, ++i) 
+	{
+		buffer[i] = str[j - 1];
+	}
+	buffer[i] = '\0';
+}
 
-    char end = *pchar;
+void ExpandHelper(char* buffer, size_t bufferLen, const char* str) {
+	
+	static const SEPARATOR = '-';
+	
+	size_t i = 0;
+	const char* pchar = &str[0];
+	char start = 0;
+	char end = 0;
+	char c = 0;
 
-    ++pchar;
+	if (!isalnum(*pchar)) return;
+		
+	start = *pchar;
+	++pchar;
 
-    // make sure the rest of the string is clear,
-    // if not, report error, we don't want our
-    // clients to have any surprises
-    while (isblank(*pchar)) ++pchar;
+	while (1) {
 
-    if (*pchar != '\0') {
-        errno = EINVAL;
-        return EINVAL;
-    }
-    
-    // unfold the sequence
-    size_t i = 0;
-    char c = start;
-    char* pbuffer = &buffer[0]; 
-    
-    while (i < bufferLen - 1 && c <= end) {
-        *pbuffer = c;
-        ++pbuffer;
-        ++c;
-    }
+		if (*pchar != SEPARATOR) break;
 
-    *pbuffer = '\0';
+		++pchar;
 
-    return 0;
+		if (!isalnum(*pchar)) break;
+
+		end = *pchar;
+		++pchar;
+
+		c = start;
+		while (i < bufferLen - 1 && c <= end) {
+			buffer[i] = c;
+			++c;
+			++i;
+		}
+
+		if (!(i < bufferLen - 1)) break;
+
+		start = end + 1;
+	}
+
+	buffer[i] = '\0';
+
+	ExpandHelper(&buffer[i], bufferLen - i, pchar);
 }
