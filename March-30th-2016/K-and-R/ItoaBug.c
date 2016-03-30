@@ -61,7 +61,7 @@ void Itoa(int n, char s[])
     do { /* generate digits in reverse order */
         int digit = (sign < 0) ? -(n % 10) + '0' : n % 10 + '0';
         s[i++] = digit; /* get next digit */    
-    } while (!(sign >= 0 && (n /= 10) < 0) &&
+    } while (!(sign >= 0 && (n /= 10) <= 0) &&
             !(sign < 0 && (n /= 10) >= 0));
     if (sign < 0)
         s[i++] = '-';
