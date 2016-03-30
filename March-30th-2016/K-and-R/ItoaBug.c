@@ -83,9 +83,7 @@ int main(void) {
         }
         ++n;
     }
-
-    printf("%s\n", buffer);
-
+    
     getchar();
     return 0;
 }
