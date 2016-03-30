@@ -235,6 +235,5 @@ int FixedDictionaryGet(    struct FixedDictionary* self,
             }
         }
     }
-    OutValue = NULL;
     return 0;
 }
