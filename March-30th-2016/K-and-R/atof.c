@@ -11,6 +11,8 @@
 
 double Atof(const char* s) {
     
+    if (!s) return 0.0;
+    
     while (isspace(*s)) ++s;
 
     int sign = 1;
