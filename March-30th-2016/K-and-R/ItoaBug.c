@@ -73,13 +73,16 @@ int main(void) {
     
     char buffer[256] = { 0 };
     // comment
+    
     int n = INT_MIN;
-    Itoa(n, buffer);
-
-    printf("%s\n", buffer);
-
-    n = INT_MIN + 1;
-    Itoa(n, buffer);
+    while (1) {
+        Itoa(n, buffer);
+        printf("%s.\n", buffer);
+        if (n == INT_MAX) {
+            break;
+        }
+        ++n;
+    }
 
     printf("%s\n", buffer);
 
