@@ -235,5 +235,6 @@ int FixedDictionaryGet(    struct FixedDictionary* self,
             }
         }
     }
+    memset(OutValue, 0, self->_valueSize);
     return 0;
 }
