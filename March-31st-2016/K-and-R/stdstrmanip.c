@@ -7,17 +7,13 @@
  copies at most n characters of t to s. Full descriptions are in Appendix B.
 */
 
-#define BUFFER_SIZE 256
-
 char* Strncpy(char* dest, const char* src, size_t count);
 
 char* Strncat(char* dest, const char* src, size_t count);
 
 int Strncmp(const char* s, const char* t, size_t count);
 
-int main(void) {    
-
-    char buffer[BUFFER_SIZE];// = { 0 };
+int main(void) {
 
     int ret = 0;
     
