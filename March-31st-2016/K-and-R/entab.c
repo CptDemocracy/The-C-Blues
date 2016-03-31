@@ -1,8 +1,5 @@
 #include <stdlib.h>
-#include <string.h>
 #include <stdio.h>
-#include <ctype.h>
-#include <errno.h>
 
 /*K&R C (Dennis M. Ritchie & Brian W. Kernighan)
  Exercise 5-11. Modify the program entab and detab (written as exercises in 
