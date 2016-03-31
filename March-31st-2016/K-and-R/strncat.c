@@ -1,3 +1,4 @@
+#include <string.h>
 #include <stdio.h>
 
 /*K&R C (Dennis M. Ritchie & Brian W. Kernighan)
