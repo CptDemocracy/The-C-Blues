@@ -16,6 +16,7 @@ int main(int argc, const char** argv) {
     
     while (1) {
         tabcount = atoi(argv[arg]);
+        tabcount = tabcount > 0 ? tabcount : 1;
         count = 0;
         printf(">>> ");
         while ( (c = getchar()) != '\n') {
