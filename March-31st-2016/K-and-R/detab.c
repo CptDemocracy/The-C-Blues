@@ -9,6 +9,10 @@
 
 int main(int argc, const char** argv) {
 
+    if (argc < 2) {
+     fprintf(stderr, "Usage detab tabwidth1 tabwidth2 ... tabwidthn");
+     return 1;
+    }
     int arg = 1;
     int tabcount = 1;
     int count = 0;
