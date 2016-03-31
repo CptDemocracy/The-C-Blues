@@ -23,7 +23,7 @@ int Reverse(char* s) {
     return 0;
 }
 
-int ReverseHelper(char* begin, char* end) {
+static int ReverseHelper(char* begin, char* end) {
     if (!begin || !end) {
         return 1;
     }
