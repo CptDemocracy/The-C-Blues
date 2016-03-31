@@ -158,7 +158,7 @@ int StackPop(struct Stack* self, void* OutResult) {
 }
 
 int StackPeek(struct Stack* self, void* OutResult) {
-    if (!self) {
+    if (!self || !OutResult) {
         errno = EINVAL;
         return EINVAL;
     }
