@@ -45,6 +45,11 @@ double Expr(int argcount, const char* args[]) {
 
     double result = 0.0;
 
+    if (argcount < 2) {
+        DoubleTryParse(args[0], &result);
+        return result;
+    }
+
     struct Stack stack = { 0 };
     StackNew(&stack, sizeof(double), NULL);
 
