@@ -17,7 +17,7 @@
 
 int DoubleTryParse(const char* s, double* OutResult);
 
-double Expr(int argc, const char* argv[]);
+double Expr(int argcount, const char* args[]);
 
 double(*OperatorTryParse(const char* s))(double, double);
 
