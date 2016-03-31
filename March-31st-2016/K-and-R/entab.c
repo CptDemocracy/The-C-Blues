@@ -10,7 +10,7 @@
 int main(int argc, const char** argv) {
 
     if (argc < 2) {
-        fprintf(stderr, "Usage: entab tabwidth1 tabwidth2 ... tabwidthn");
+        fprintf(stderr, "Usage: entab tabwidth1 tabwidth2 ... tabwidthn\n");
         return 1;
     }
     
