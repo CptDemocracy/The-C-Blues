@@ -12,24 +12,24 @@
 #include "Stack.h"
 
 int main(void) {
-	const int COUNT = 10;
-	struct Stack stack = { 0 };
-	StackNew(&stack, sizeof(int), NULL);
-	for (int i = 0; i < COUNT; ++i) {
-		StackPush(&stack, &i);
-		printf("Pushed: %d\n", i);
-	}
-	struct Stack stack2 = { 0 };
-	StackNew(&stack2, sizeof(int), NULL);
-	StackDuplicate(&stack, &stack2);
-	StackSwapTopTwoElems(&stack2);
-	int popped = 0;
-	while (StackGetCount(&stack2) > 0) {
-		StackPop(&stack2, &popped);
-		printf("Popped: %d\n", popped);
-	}
-	StackDispose(&stack2);
-	StackDispose(&stack);
-	getchar();
-	return 0;
+    const int COUNT = 10;
+    struct Stack stack = { 0 };
+    StackNew(&stack, sizeof(int), NULL);
+    for (int i = 0; i < COUNT; ++i) {
+        StackPush(&stack, &i);
+        printf("Pushed: %d\n", i);
+    }
+    struct Stack stack2 = { 0 };
+    StackNew(&stack2, sizeof(int), NULL);
+    StackDuplicate(&stack, &stack2);
+    StackSwapTopTwoElems(&stack2);
+    int popped = 0;
+    while (StackGetCount(&stack2) > 0) {
+        StackPop(&stack2, &popped);
+        printf("Popped: %d\n", popped);
+    }
+    StackDispose(&stack2);
+    StackDispose(&stack);
+    getchar();
+    return 0;
 }
