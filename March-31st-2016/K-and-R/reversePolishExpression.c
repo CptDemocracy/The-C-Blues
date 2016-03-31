@@ -11,7 +11,7 @@
  Exercise 5-10. Write the program expr, which evaluates a reverse Polish expression 
  from the command line, where each operator or operand is a separate argument. For 
  example:
-	expr 2 3 4 + *
+    expr 2 3 4 + *
  evaluates 2 * (3+4).
 */
 
@@ -30,12 +30,12 @@ double Div(double a, double b);
 double Sub(double a, double b);
 
 int main(int argc, const char* argv[]) {    
-	
-	int argcount = argc - 1;
-	const char** args = &argv[1];
+    
+    int argcount = argc - 1;
+    const char** args = &argv[1];
 
-	double result = Expr(argcount, args);
-	printf("%lf\n", result);
+    double result = Expr(argcount, args);
+    printf("%lf\n", result);
 
     getchar();
     return 0;
@@ -43,83 +43,83 @@ int main(int argc, const char* argv[]) {
 
 double Expr(int argcount, const char* args[]) {
 
-	double result = 0.0;
+    double result = 0.0;
 
-	struct Stack stack = { 0 };
-	StackNew(&stack, sizeof(double), NULL);
+    struct Stack stack = { 0 };
+    StackNew(&stack, sizeof(double), NULL);
 
-	double operand = 0.0;
-	double (*operation)(double, double) = NULL;
-	for (int i = 0; i < argcount; ++i) {
-		if (DoubleTryParse(args[i], &operand)) {
-			StackPush(&stack, &operand);
-		}
-		else if (operation = OperatorTryParse(args[i])) {
-			if (StackGetCount(&stack) > 1) {
-				StackPop(&stack, &result);
-				StackPop(&stack, &operand);
-				result = (*operation)(operand, result);
-				StackPush(&stack, &result);
-			}
-		} 
-		else {
-			return 0.0;
-		}
-	}
+    double operand = 0.0;
+    double (*operation)(double, double) = NULL;
+    for (int i = 0; i < argcount; ++i) {
+        if (DoubleTryParse(args[i], &operand)) {
+            StackPush(&stack, &operand);
+        }
+        else if (operation = OperatorTryParse(args[i])) {
+            if (StackGetCount(&stack) > 1) {
+                StackPop(&stack, &result);
+                StackPop(&stack, &operand);
+                result = (*operation)(operand, result);
+                StackPush(&stack, &result);
+            }
+        } 
+        else {
+            return 0.0;
+        }
+    }
 
-	StackDispose(&stack);
-	return result;
+    StackDispose(&stack);
+    return result;
 }
 
 double Add(double a, double b) {
-	return a + b;
+    return a + b;
 }
 
 double Mul(double a, double b) {
-	return a * b;
+    return a * b;
 }
 
 double Div(double a, double b) {
-	return a / b;
+    return a / b;
 }
 
 double Sub(double a, double b) {
-	return a - b;
+    return a - b;
 }
 
 double(*OperatorTryParse(const char* s))(double, double) {
-	
-	if (!s) return NULL;
+    
+    if (!s) return NULL;
 
-	while (isspace(*s)) ++s;
+    while (isspace(*s)) ++s;
 
-	switch (*s) {
-		case '+':
-			return &Add;
-			break;
-		case '-':
-			return &Sub;
-			break;
-		case '/':
-			return &Div;
-			break;
-		case '*':
-			return &Mul;
-			break;
-		default:
-			break;
-	}
-	return NULL;
+    switch (*s) {
+        case '+':
+            return &Add;
+            break;
+        case '-':
+            return &Sub;
+            break;
+        case '/':
+            return &Div;
+            break;
+        case '*':
+            return &Mul;
+            break;
+        default:
+            break;
+    }
+    return NULL;
 }
 
 int DoubleTryParse(const char* s, double* OutResult) {
     
-	if (!OutResult) return 0;
+    if (!OutResult) return 0;
 
     if (!s) {
-		*OutResult = 0.0;
-		return 0;
-	}
+        *OutResult = 0.0;
+        return 0;
+    }
     
     while (isspace(*s)) ++s;
 
@@ -134,9 +134,9 @@ int DoubleTryParse(const char* s, double* OutResult) {
     else if (*s == '+') {
         ++s;
     }
-	if (!isdigit(*s)) {
-		return 0;
-	}
+    if (!isdigit(*s)) {
+        return 0;
+    }
     while (isdigit(*s)) {
         result = result * 10.0 + (*s - '0');
         ++s;
@@ -170,11 +170,11 @@ int DoubleTryParse(const char* s, double* OutResult) {
             }
             exp *= fracsign;
         
-			*OutResult = sign * result / frac * pow(10.0, exp);
+            *OutResult = sign * result / frac * pow(10.0, exp);
             return 1;
         }
 
-		*OutResult = sign * result / frac;
+        *OutResult = sign * result / frac;
         return 1;
     }
     else if (*s == 'E' || *s == 'e') {
@@ -198,10 +198,10 @@ int DoubleTryParse(const char* s, double* OutResult) {
         }
         exp *= fracsign;
         
-		*OutResult = sign * result * pow(10.0, exp);
+        *OutResult = sign * result * pow(10.0, exp);
         return 1;
     }
     
-	*OutResult = result;
+    *OutResult = result;
     return 1;
 }
