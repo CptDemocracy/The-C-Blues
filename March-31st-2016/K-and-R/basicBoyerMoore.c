@@ -9,8 +9,8 @@ int BoyerMoore(const char* txt, const char* pat);
 
 int main(void) {    
     
-    const char* txt = "naanaaanaam";
-    const char* pat = "naam";
+    const char* txt = "napanapanaaamapanamanaam";
+    const char* pat = "manaa";
     
     int k = BoyerMoore(txt, pat);
 
@@ -21,13 +21,13 @@ int main(void) {
 }
 
 int BoyerMoore(const char* txt, const char* pat) {
-    size_t txtlen = strlen(txt);
-    size_t patlen = strlen(pat);
-    size_t i = 0; 
+    int txtlen = strlen(txt);
+    int patlen = strlen(pat);
+    int i = 0; 
     while (i <= txtlen - patlen) {
         if (txt[i] == pat[0] && txt[i + patlen - 1] == pat[patlen - 1]) {
-            size_t k = i + 1;
-            size_t j = 1;
+            int k = i + 1;
+            int j = 1;
             while (j < patlen - 2) {
                 if (txt[k] != pat[j]) {
                     break;
@@ -36,6 +36,9 @@ int BoyerMoore(const char* txt, const char* pat) {
             }
             if (j == patlen - 2) {
                 return k - j;
+            }
+            else {
+                i = k;
             }
         }
         else {
