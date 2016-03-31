@@ -5,14 +5,14 @@
 
 char BUFFER[BUFFER_SIZE];
 
-int BoyerMoore(const char* txt, const char* pat);
+int strsearch(const char* txt, const char* pat);
 
 int main(void) {    
     
     const char* txt = "napanapanaaamapanamanaam";
     const char* pat = "manaa";
     
-    int k = BoyerMoore(txt, pat);
+    int k = strsearch(txt, pat);
 
     printf("%d\n", k);
 
@@ -20,7 +20,7 @@ int main(void) {
     return 0;
 }
 
-int BoyerMoore(const char* txt, const char* pat) {
+int strsearch(const char* txt, const char* pat) {
     int txtlen = strlen(txt);
     int patlen = strlen(pat);
     int i = 0; 
