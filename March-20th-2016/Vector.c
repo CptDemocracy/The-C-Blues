@@ -45,7 +45,7 @@ int VectorDispose(struct Vector* self) {
     return 0;
 }
 
-int VectorAdd(struct Vector* self, void* item) {
+int VectorAdd(struct Vector* self, const void* item) {
     if (!self || !item) {
         errno = EINVAL;
         return errno;
