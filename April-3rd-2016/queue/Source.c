@@ -16,8 +16,8 @@ int main(void) {
         ++lz;
     }
 
-    QueueDequeue(&queue, &lz);
-    QueueDequeue(&queue, &lz);
+    QueueDequeue(&queue, NULL);
+    QueueDequeue(&queue, NULL);
 
     while (QueueGetCount(&queue) > 0) {
         QueueDequeue(&queue, &lz);
