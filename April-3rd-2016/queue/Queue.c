@@ -53,8 +53,10 @@ int QueueEnqueue(struct Queue* self, const void* item) {
     return errorCode;
 }
 
+// if client does not want the dequeued item, they can indicate that by
+// passing a NULL
 int QueueDequeue(struct Queue* self, void* OutResult) {
-    if (!self || !OutResult) {
+    if (!self) {
         errno = EINVAL;
         return EINVAL;
     }
@@ -62,8 +64,12 @@ int QueueDequeue(struct Queue* self, void* OutResult) {
         errno = EPERM;
         return EPERM;
     }
+    
     void* head = (char*)self->_items + self->_headIndex * self->_itemSize;    
-    memcpy(OutResult, head, self->_itemSize);
+    
+    if (OutResult) {
+        memcpy(OutResult, head, self->_itemSize);
+    }
 
     // sanitize the dequeued item in the container
     memset(head, 0, self->_itemSize);
