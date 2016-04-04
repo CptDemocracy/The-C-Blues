@@ -18,13 +18,26 @@ double Div(double a, double b);
 
 double Mod(double a, double b);
 
-double PolishExpressionParse(const char* exp);
+int PolishExpressionParse(const char* exp, double* OutResult);
+
+#define BUFFER_SIZE 256
+
+// a driver program to test the Polish calculator
 
 int main(void) {
     
-    const char* exp = "+ - 2 3 5) 6"; // == 0
-    double result = PolishExpressionParse(exp);
-    printf("%lf\n", result);
+    char buffer[BUFFER_SIZE] = { 0 };
+    double result = 0.0;
+
+    while (1) {
+        printf(">>> ");
+        fgets(buffer, BUFFER_SIZE, stdin);
+        if (PolishExpressionParse(buffer, &result) != 0) {
+            fprintf(stderr, "Input invalid.\n");
+            continue;
+        }
+        printf("%lf\n", result);
+    }
 
     getchar();
     return 0;
@@ -50,11 +63,13 @@ double Mod(double a, double b) {
     return a - (long long)a / (long long)b * b;
 }
 
-double PolishExpressionParse(const char* exp) {
+int PolishExpressionParse(const char* exp, double* OutResult) {    
     if (!exp) {
         errno = EINVAL;
-        return 0.0;
+        return EINVAL;
     }
+
+    *OutResult = 0.0;
 
     static const char* supportedOperators[] = {
         "+", "-", "*", "/", "mod", NULL
@@ -159,5 +174,6 @@ double PolishExpressionParse(const char* exp) {
     StackDispose(&operators);
     StackDispose(&tempOperands);
 
-    return result;
+    *OutResult = result;
+    return 0;
 }
