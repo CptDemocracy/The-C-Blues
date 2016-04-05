@@ -21,7 +21,10 @@ enum CharFamily {
 
 enum CharFamily GetCharFamily(char c);
 
-void TokenizeExpression(char *exp, char *OutResult, size_t OutResultCapacity);
+void TokenizeExpression(char *exp, 
+    char *OutResult, 
+    size_t OutResultCapacity, 
+    int caseSensitive);
 
 char* GetNextToken(void);
 
