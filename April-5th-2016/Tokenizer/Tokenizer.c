@@ -44,7 +44,12 @@ static int DecrementTokenCount(void) {
     return *pcount;
 }
 
-void TokenizeExpression(char *exp, char *OutResult, size_t OutResultCapacity, int caseSensitive) {
+void TokenizeExpression(char *exp, 
+    char *OutResult, 
+    size_t OutResultCapacity, 
+    int caseSensitive) 
+{
+    
     size_t len = strlen(exp);
 
     if (len < 1 || OutResultCapacity < 1) return;
