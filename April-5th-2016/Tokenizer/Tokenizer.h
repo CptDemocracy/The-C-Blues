@@ -26,6 +26,11 @@ void TokenizeExpression(char *exp,
     size_t OutResultCapacity, 
     int caseSensitive);
 
+void TokenizeExpressionPred(char *exp, 
+    char *OutResult, 
+    size_t OutResultCapacity,
+    int (*splitPredicate)(char, char));
+
 char* GetNextToken(void);
 
 #endif /* TOKENIZER_H */
