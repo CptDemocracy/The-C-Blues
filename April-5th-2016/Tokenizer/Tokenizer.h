@@ -21,12 +21,12 @@ enum CharFamily {
 
 enum CharFamily GetCharFamily(char c);
 
-void TokenizeExpression(char *exp, 
+void TokenizeExpression(const char *exp, 
     char *OutResult, 
     size_t OutResultCapacity, 
     int caseSensitive);
 
-void TokenizeExpressionPred(char *exp, 
+void TokenizeExpressionPred(const char *exp, 
     char *OutResult, 
     size_t OutResultCapacity,
     int (*splitPredicate)(char curr, char last));
