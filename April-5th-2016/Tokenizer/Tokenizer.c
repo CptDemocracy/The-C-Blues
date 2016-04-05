@@ -1,4 +1,5 @@
 #include <string.h>
+
 #include "Tokenizer.h"
 
 static int *GetTokenCounterAddress(void);
@@ -84,7 +85,7 @@ void TokenizeExpression(char *exp,
 void TokenizeExpressionPred(char *exp, 
     char *OutResult, 
     size_t OutResultCapacity,
-    int (*splitPredicate)(char, char)) 
+    int (*splitPredicate)(char curr, char last)) 
 {
 
     size_t len = strlen(exp);
