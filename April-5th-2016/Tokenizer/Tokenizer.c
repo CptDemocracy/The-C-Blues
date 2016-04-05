@@ -44,7 +44,7 @@ static int DecrementTokenCount(void) {
     return *pcount;
 }
 
-void TokenizeExpression(char *exp, char *OutResult, size_t OutResultCapacity) {
+void TokenizeExpression(char *exp, char *OutResult, size_t OutResultCapacity, int caseSensitive) {
     size_t len = strlen(exp);
 
     if (len < 1 || OutResultCapacity < 1) return;
@@ -65,10 +65,12 @@ void TokenizeExpression(char *exp, char *OutResult, size_t OutResultCapacity) {
         enum CharFamily charFam1 = GetCharFamily(exp[i]);
         enum CharFamily charFam2 = GetCharFamily(exp[i - 1]);
 
-        // disable case bits to provide case 
-        // insensitive comparison
-        charFam1 = charFam1 & (~Lower) & (~Upper);
-        charFam2 = charFam2 & (~Lower) & (~Upper);
+        if (!caseSensitive) {
+            // disable case bits to provide case 
+            // insensitive comparison
+            charFam1 = charFam1 & (~Lower) & (~Upper);
+            charFam2 = charFam2 & (~Lower) & (~Upper);
+        }
 
         if (charFam1 == charFam2) {
             OutResult[j] = exp[i];
