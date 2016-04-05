@@ -8,26 +8,26 @@
 * OutResult - pointer to the memory where the result of evaluation should be stored
 */
 int Sum(const void* base, 
-	size_t itemCount, 
-	size_t itemSize,
-	void (*binarySumFunc)(const void* a, const void* b, void* OutResult),
-	void* OutResult)
+    size_t itemCount, 
+    size_t itemSize,
+    void (*binarySumFunc)(const void* a, const void* b, void* OutResult),
+    void* OutResult)
 {
-	if (!base || itemSize < 1 || !binarySumFunc || !OutResult) {
-		errno = EINVAL;
-		return EINVAL;
-	}
-	memset(OutResult, 0, itemSize);
-	if (itemCount < 1) {
-		return 0;
-	}
-	else if (itemCount == 1) {
-		memcpy(OutResult, base, itemSize);
-		return 0;
-	}
-	memcpy(OutResult, base, itemSize);
-	for (size_t i = 1; i < itemCount; ++i) {
-		binarySumFunc(OutResult, (char*)base + i * itemSize, OutResult);
-	}
-	return 0;
+    if (!base || itemSize < 1 || !binarySumFunc || !OutResult) {
+        errno = EINVAL;
+        return EINVAL;
+    }
+    memset(OutResult, 0, itemSize);
+    if (itemCount < 1) {
+        return 0;
+    }
+    else if (itemCount == 1) {
+        memcpy(OutResult, base, itemSize);
+        return 0;
+    }
+    memcpy(OutResult, base, itemSize);
+    for (size_t i = 1; i < itemCount; ++i) {
+        binarySumFunc(OutResult, (char*)base + i * itemSize, OutResult);
+    }
+    return 0;
 }
