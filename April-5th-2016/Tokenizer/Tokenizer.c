@@ -1,5 +1,4 @@
 #include <string.h>
-
 #include "Tokenizer.h"
 
 static int *GetTokenCounterAddress(void);
