@@ -29,7 +29,7 @@ void TokenizeExpression(char *exp,
 void TokenizeExpressionPred(char *exp, 
     char *OutResult, 
     size_t OutResultCapacity,
-    int (*splitPredicate)(char, char));
+    int (*splitPredicate)(char curr, char last));
 
 char* GetNextToken(void);
 
