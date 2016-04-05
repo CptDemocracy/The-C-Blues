@@ -11,9 +11,9 @@ int DynamicBufferGetCount(struct DynamicBuffer* self);
 
 int DynamicBufferNew(struct DynamicBuffer* self);
 
-int DynamicBufferFGetString(struct DynamicBuffer* self, FILE* stream);
+const char* DynamicBufferFGetString(struct DynamicBuffer* self, FILE* stream);
 
-int DynamicBufferGetString(struct DynamicBuffer* self);
+const char* DynamicBufferGetString(struct DynamicBuffer* self);
 
 char DynamicBufferFGetChar(struct DynamicBuffer* self, FILE* stream);
 
