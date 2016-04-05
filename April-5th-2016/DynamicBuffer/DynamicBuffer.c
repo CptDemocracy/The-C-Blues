@@ -63,7 +63,7 @@ const char* DynamicBufferFGetString(struct DynamicBuffer* self, FILE* stream) {
     char c = '\0';
     int errorCode = 0;
     
-    const char* begin = &self->_buffer[self->_size];
+   size_t charsRead = 0;
     while ( (c = fgetc(stream)) != EOF && c != '\n') {
         // request extra byte for the null terminating character
         errorCode = DynamicBufferEnsureCapacity(self, self->_size + 2);
@@ -72,8 +72,9 @@ const char* DynamicBufferFGetString(struct DynamicBuffer* self, FILE* stream) {
         }
         self->_buffer[self->_size] = c;
         ++self->_size;
+        ++charsRead;
     }
-    return begin;
+    return &self->_buffer[self->_size - charsRead];
 }
 
 const char* DynamicBufferGetString(struct DynamicBuffer* self) {
