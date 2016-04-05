@@ -56,6 +56,7 @@ void TokenizeExpression(char *exp, char *OutResult, size_t OutResultCapacity) {
     }
 
     OutResult[0] = exp[0];
+    IncrementTokenCount();
 
     size_t i = 1;
     size_t j = 1;
