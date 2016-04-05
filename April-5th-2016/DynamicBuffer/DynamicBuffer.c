@@ -63,7 +63,11 @@ const char* DynamicBufferFGetString(struct DynamicBuffer* self, FILE* stream) {
     char c = '\0';
     int errorCode = 0;
     
-   size_t charsRead = 0;
+    // do not try fetching the address of the beginning of the string
+    // at this point, e.g. char* begin = &self->_buffer[self->_size]
+    // - the buffer WILL move after buffer re-allocation.
+    
+    size_t charsRead = 0;
     while ( (c = fgetc(stream)) != EOF && c != '\n') {
         // request extra byte for the null terminating character
         errorCode = DynamicBufferEnsureCapacity(self, self->_size + 2);
