@@ -44,12 +44,50 @@ static int DecrementTokenCount(void) {
     return *pcount;
 }
 
+static int SplitPredicateCaseInsensitive(char a, char b) {
+    enum CharFamily charFam1 = GetCharFamily(a);
+    enum CharFamily charFam2 = GetCharFamily(b);
+
+    // disable case bits to provide case 
+    // insensitive comparison
+    charFam1 = charFam1 & (~Lower) & (~Upper);
+    charFam2 = charFam2 & (~Lower) & (~Upper);
+
+    if (charFam1 == charFam2) {
+        return 1;
+    }
+    return 0;
+}
+
+static int SplitPredicateCaseSensitive(char a, char b) {
+    enum CharFamily charFam1 = GetCharFamily(a);
+    enum CharFamily charFam2 = GetCharFamily(b);
+
+    if (charFam1 == charFam2) {
+        return 1;
+    }
+    return 0;
+}
+
 void TokenizeExpression(char *exp, 
     char *OutResult, 
-    size_t OutResultCapacity, 
+    size_t OutResultCapacity,
     int caseSensitive) 
 {
-    
+    if (caseSensitive) {
+        TokenizeExpressionPred(exp, OutResult, OutResultCapacity, SplitPredicateCaseSensitive);
+    }
+    else {
+        TokenizeExpressionPred(exp, OutResult, OutResultCapacity, SplitPredicateCaseInsensitive);
+    }
+}
+
+void TokenizeExpressionPred(char *exp, 
+    char *OutResult, 
+    size_t OutResultCapacity,
+    int (*splitPredicate)(char, char)) 
+{
+
     size_t len = strlen(exp);
 
     if (len < 1 || OutResultCapacity < 1) return;
@@ -65,19 +103,9 @@ void TokenizeExpression(char *exp,
 
     size_t i = 1;
     size_t j = 1;
-    while (i < len && j < OutResultCapacity - 2) {
-
-        enum CharFamily charFam1 = GetCharFamily(exp[i]);
-        enum CharFamily charFam2 = GetCharFamily(exp[i - 1]);
-
-        if (!caseSensitive) {
-            // disable case bits to provide case 
-            // insensitive comparison
-            charFam1 = charFam1 & (~Lower) & (~Upper);
-            charFam2 = charFam2 & (~Lower) & (~Upper);
-        }
-
-        if (charFam1 == charFam2) {
+    while (i < len && j < OutResultCapacity - 2) 
+    {
+        if ((*splitPredicate)(exp[i], exp[i - 1])) {
             OutResult[j] = exp[i];
         }
         else {
