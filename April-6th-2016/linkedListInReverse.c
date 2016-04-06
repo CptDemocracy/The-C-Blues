@@ -25,6 +25,12 @@ struct node {
 void LinkedListInReverse(struct node *head);
 
 int main() {
+    
+    // Linked list initialization.
+    // Usually we would have it done in a separate function, as 
+    // encapsulated as C allows, but for this problem, we keep
+    // initialization and de-allocation all in one function
+    
     struct node *head = (struct node*)calloc(1, sizeof(struct node));
     struct node *curr = head;
     size_t count = 10;
@@ -41,6 +47,7 @@ int main() {
 
     LinkedListInReverse(head);
 
+    // De-allocate the linked list
     curr = head;
     for (size_t i = 0; i < count; ++i) {
         head = curr->nxt;
