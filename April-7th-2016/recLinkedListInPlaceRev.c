@@ -9,6 +9,8 @@ struct node {
 
 struct node *ReverseLinkedList(struct node *head);
 
+struct node *ReverseLinkedListHelper(struct node *head);
+
 int main() {
     
     // Linked list initialization.
