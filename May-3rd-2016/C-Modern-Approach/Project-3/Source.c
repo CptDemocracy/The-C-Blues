@@ -24,15 +24,15 @@ Item number: 97950
 Check digit: 3
 "
 
-Note: The number of digits in each group may vary; you can't assume that groups
-have the lengths shown in this example. Test your program with actual ISBN values
-(usually found on the back cover of a book and on the copyright page).
+Note: The number of digits in each group may vary; you can't assume 
+that groups have the lengths shown in this example. Test your program 
+with actual ISBN values (usually found on the back cover of a book and 
+on the copyright page).
 */
 
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
-#include <ctype.h>
 
 #define BUFFER_SIZE 256
 
@@ -59,10 +59,10 @@ int main(void)
     // character.
     sprintf_s(buffer, BUFFER_SIZE, FORMAT_STRING,
         ( sizeof(isbnCode.gs1prefix) - 1)        / sizeof(char),
-        ( sizeof(isbnCode.groupId) - 1)            / sizeof(char),
+        ( sizeof(isbnCode.groupId) - 1)          / sizeof(char),
         ( sizeof(isbnCode.publisherCode) - 1)    / sizeof(char),
-        ( sizeof(isbnCode.itemNo) - 1)            / sizeof(char),
-        ( sizeof(isbnCode.checkDigit) - 1)        / sizeof(char));
+        ( sizeof(isbnCode.itemNo) - 1)           / sizeof(char),
+        ( sizeof(isbnCode.checkDigit) - 1)       / sizeof(char));
     printf("Please enter ISBN: ");
     while ( scanf(buffer, 
         &isbnCode.gs1prefix,
