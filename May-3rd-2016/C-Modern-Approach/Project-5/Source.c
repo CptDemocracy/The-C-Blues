@@ -28,7 +28,7 @@ columns and diagonals:
 #define NUM_COUNT            16
 #define COL_COUNT            4
 #define ROW_COUNT            (NUM_COUNT / COL_COUNT)
-#define INVALID_INPUT_MSG    "Input invalid. Please try again"
+#define INVALID_INPUT_MSG    "Input invalid. Please try again."
 
 int sumArray(int *nums, int length, int step);
 
