@@ -1,7 +1,7 @@
 /*
 K.N.King "C Programming. A Modern Approach."
 
-Programming project 2 p.50
+Programming project 3 p.50
 
 "Books are identified by an International Standard Book Number
 (ISBN). ISBNs assigned after January 1, 2007 contain 13 digits,
