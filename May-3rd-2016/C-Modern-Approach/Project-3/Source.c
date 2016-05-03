@@ -55,6 +55,13 @@ int main(void)
     int scanfState = 0;
     int isInputValid = 0;
 
+    const char *numericLiteralsToValidate[] = { 
+        isbnCode.gs1prefix, isbnCode.groupId, 
+        isbnCode.publisherCode, isbnCode.itemNo, 
+        isbnCode.checkDigit, 
+        NULL // null-terminate the array
+    };
+
     // set up a format string in the buffer
     // we need to specify widths and provide
     // an extra byte for the null terminating
@@ -95,15 +102,15 @@ int main(void)
         isInputValid = 1;
 
         // make sure we only got digits in input
-        isInputValid = IsNumericLiteral(isbnCode.gs1prefix);
-        isInputValid = isInputValid && IsNumericLiteral(isbnCode.groupId);
-        isInputValid = isInputValid && IsNumericLiteral(isbnCode.publisherCode);
-        isInputValid = isInputValid && IsNumericLiteral(isbnCode.itemNo);
-        isInputValid = isInputValid && IsNumericLiteral(isbnCode.checkDigit);
-        if (!isInputValid) {
-            // input invalid
-            puts(INPUT_INVALID_MSG);
-        }
+        const char **inputStringPtr = &numericLiteralsToValidate[0];
+        while (*inputStringPtr != NULL) {
+            isInputValid = isInputValid && IsNumericLiteral(*inputStringPtr);
+            if (!isInputValid) {
+                puts(INPUT_INVALID_MSG);
+                break;
+            }
+            ++inputStringPtr;
+        }        
     }
     printf("GS1 prefix: %s\n", isbnCode.gs1prefix);
     printf("Group identifier: %s\n", isbnCode.groupId);
