@@ -2,7 +2,7 @@
 K.N.King "C Programming. A Modern Approach."
 Programming project 1 p.96
 
-1. Write a program that calculates how many digits
+Write a program that calculates how many digits
 a number contains:
 
 "Enter a number: 374
