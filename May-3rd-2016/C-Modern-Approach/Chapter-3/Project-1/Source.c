@@ -17,11 +17,11 @@ The reversal is: 82
 #include <ctype.h>
 #include <stdio.h>
 
-#define BUFFER_SIZE            16
+#define BUFFER_SIZE           16
 #define INVALID_INPUT_MSG    "Input invalid. Please try again."
 
 #define DEBUG
-#undef    DEBUG
+#undef  DEBUG
 
 int StringReverse(char *s, int first, int last);
 
