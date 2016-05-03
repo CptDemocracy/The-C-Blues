@@ -83,7 +83,10 @@ int main(void)
 
             // consume trailing invalid input
             char c = '\0';
-            while ((c = getchar()) != '\n' && c != EOF) continue;
+            while ((c = getchar()) != '\n' && c != EOF) {
+                continue;
+            }
+            continue;
         }
         // consume the trailing new line character left
         // by scanf
