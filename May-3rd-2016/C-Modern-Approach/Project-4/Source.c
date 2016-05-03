@@ -15,7 +15,7 @@ You entered 404.817.6900
 #include <ctype.h>
 #include <stdio.h>
 
-#define BUFFER_SIZE            256
+#define BUFFER_SIZE           256
 #define INPUT_INVALID_MSG    "Input invalid. Please try again."
 
 struct PhoneNumber
@@ -43,9 +43,9 @@ int main(void)
     const char *FORMAT_STRING = "(%%%ds)%%%ds-%%%ds";
     char buffer[BUFFER_SIZE] = { 0 };
     sprintf(buffer, FORMAT_STRING,
-        ( sizeof(phoneNumber.firstDigitGroup)    - 1) / sizeof(char),
-        ( sizeof(phoneNumber.secondDigitGroup)    - 1) / sizeof(char),
-        ( sizeof(phoneNumber.thirdDigitGroup)    - 1) / sizeof(char));
+        ( sizeof(phoneNumber.firstDigitGroup)  - 1) / sizeof(char),
+        ( sizeof(phoneNumber.secondDigitGroup) - 1) / sizeof(char),
+        ( sizeof(phoneNumber.thirdDigitGroup)  - 1) / sizeof(char));
 
     printf("Enter phone number [(xxx) xxx-xxxx]: ");
     while (!isInputValid) 
