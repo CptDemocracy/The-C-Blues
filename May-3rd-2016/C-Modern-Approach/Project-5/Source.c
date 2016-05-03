@@ -35,7 +35,8 @@ int sumArray(int *nums, int length, int step);
 int main(void) {
 
     // where are my VLAs, Visual Studio 2015, where?
-    //int nums[NUM_COUNT] = { 0 };
+    int nums[NUM_COUNT] = { 0 };
+
     int isInputValid = 0;
     int diagSum1 = 0;
     int diagSum2 = 0;
@@ -44,7 +45,7 @@ int main(void) {
     int col = 0;
     int row = 0;
 
-    /*// collect input
+    // collect input
     printf("Enter the numbers from 1 to %d in any order:\n", NUM_COUNT);
     while (!isInputValid)
     {
@@ -65,11 +66,7 @@ int main(void) {
         }
         if (!isInputValid) puts(INVALID_INPUT_MSG);
     }
-    getchar();*/
-
-    int nums[] = {
-        16, 3, 2, 13, 5, 10, 11, 8, 9, 6, 7, 12, 4, 15, 14, 1
-    };
+    getchar();
 
     // output input
     int i = 0;
