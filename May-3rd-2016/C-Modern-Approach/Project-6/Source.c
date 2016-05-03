@@ -13,8 +13,8 @@ The sum is 38/24
 #include <stdlib.h>
 #include <stdio.h>
 
-#define INPUT_INVALID_MSG    "Input invalid. Please try again."
-#define INTERNAL_ERROR_MSG    "An internal error has occured trying to parse the operator."
+#define INPUT_INVALID_MSG       "Input invalid. Please try again."
+#define INTERNAL_ERROR_MSG      "An internal error has occured trying to parse the operator."
 
 struct Fraction
 {
@@ -53,7 +53,7 @@ int main(void) {
             &frac2.num, 
             &frac2.denom);
         if (scanfState < 5) {
-            // input invalid, inform the user
+            // input invalid, inform the user,
             // discard invalid input from the
             // stream and request input again
             puts(INPUT_INVALID_MSG);
@@ -64,8 +64,8 @@ int main(void) {
             }
             continue;
         }
-        // consume trailing new line character left
-        // by the scanf function
+        // consume trailing new line character 
+        // left by the scanf function
         getchar();
         break;
     }
