@@ -94,7 +94,8 @@ int main(void) {
         printf("%d ", colSum);
     }
     putchar('\n');
-
+    
+    // count diagonal sums
     i = 0;
     row = 0;
     col = 0;
