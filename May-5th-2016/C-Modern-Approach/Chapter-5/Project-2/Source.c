@@ -15,9 +15,9 @@ Be careful not to display 12:00 as 0:00.
 #include <stdlib.h>
 #include <stdio.h>
 
-#define HOURS_PER_DAY        24
+#define HOURS_PER_DAY       24
 #define MINUTES_PER_HOUR    60
-#define MIDDAY_HOUR            12
+#define MIDDAY_HOUR         12
 
 enum TimePeriod { AM, PM };
 
