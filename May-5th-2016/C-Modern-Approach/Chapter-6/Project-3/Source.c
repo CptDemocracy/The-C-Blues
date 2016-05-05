@@ -28,7 +28,7 @@ double Gcd(double m, double n);
 int main(void) 
 {
     struct Fraction 
-        input    = { .num = 0, .denom = 1 },
+        input   = { .num = 0, .denom = 1 },
         reduced = { .num = 0, .denom = 1 };
     char c = '\0';
 
