@@ -34,7 +34,10 @@ int main(void)
     while (count < MAX_VALUES)
     {
         while ( scanf("%d", &input) != 1) {
-            puts("Input invalid. Please try entering this number again.");            
+            puts("Input invalid. Please try again.");    
+
+            // reset the counter
+            count = 0;
 
             while ( (c = getchar()) != '\n' && c != EOF) continue;
         }
@@ -44,9 +47,9 @@ int main(void)
     while ( (c = getchar()) != '\n' && c != EOF) continue;
 
     printf("Greatest common divisor for numbers:");
-    
+
     gcd = GcdArray(values, count);
-    
+
     for (int i = 0; i < count; ++i) {
         printf(" %g", values[i]);
     }
