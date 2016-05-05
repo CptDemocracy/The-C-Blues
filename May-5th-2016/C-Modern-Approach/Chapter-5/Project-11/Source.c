@@ -60,6 +60,7 @@ int main(void)
 
     while (1)
     {
+        printf("Please enter a two-digit number: ");
         if ( scanf("%d", &number) != 1) 
         {
             printf ("Input invalid. Please make sure you are entering" 
@@ -84,13 +85,14 @@ int main(void)
     // play it safe
     number %= MAX_NUMBER + 1;
         
+    printf("You entered the number ");
     if (number > 20) {
         printf("%s-", numTable[number - number % 10]);
         printf("%s", numTable[number % 10]);
     } else {
         printf("%s", numTable[number]);
     }
-    putchar('\n');
+    puts(".");
     getchar();
     return EXIT_SUCCESS;
 }
