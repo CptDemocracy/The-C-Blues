@@ -91,8 +91,6 @@ int main(void)
         printf("%s", numTable[number]);
     }
     putchar('\n');
-    
-
     getchar();
     return EXIT_SUCCESS;
 }
