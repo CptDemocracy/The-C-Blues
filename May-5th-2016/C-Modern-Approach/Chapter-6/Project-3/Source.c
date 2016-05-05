@@ -32,6 +32,8 @@ int main(void)
         reduced = { .num = 0, .denom = 1 };
     char c = '\0';
 
+    
+    printf("Please enter a fraction [format: num/denom]: ");
     while (1) 
     {
         while ( scanf("%d / %d", &input.num, &input.denom) != 2) {
