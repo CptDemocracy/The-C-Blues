@@ -23,11 +23,9 @@ double GcdArray(const double* nums, size_t numsSize);
 int main(void) 
 {
     double values[MAX_VALUES] = { 0 };
+    double gcd = 1.0;
     int count = 0;
     int input = 0;
-
-    double gcd = 1.0;
-
     char c = '\0';
 
     printf("Enter %d integers: ", MAX_VALUES);
