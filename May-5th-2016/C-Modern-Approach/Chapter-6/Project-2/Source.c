@@ -44,7 +44,9 @@ int main(void)
     while ( (c = getchar()) != '\n' && c != EOF) continue;
 
     printf("Greatest common divisor for numbers:");
+    
     gcd = GcdArray(values, count);
+    
     for (int i = 0; i < count; ++i) {
         printf(" %g", values[i]);
     }
