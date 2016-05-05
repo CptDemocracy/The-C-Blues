@@ -34,13 +34,19 @@ int main(void)
 
         int i = 0;
         char c = '\0';
+
+        // ignore whitespace in front of the input
+        while ((c = getchar()) && isspace(c)) continue;
+        // at this point we've read a character that is
+        // not space, put it back in the stream
+        ungetc(c, stdin);
+
         while ((c = getchar()) != '\n' && c != EOF)
         {
             if (isdigit(c) && i < UPC_DIGIT_COUNT) {
                 upcDigitsArray[i] = c;
                 ++i;
-            } 
-            else if (!isspace(c)) {
+            } else {
                 // we cannot break out on the spot
                 // since we still need to discard
                 // the rest of invalid input
