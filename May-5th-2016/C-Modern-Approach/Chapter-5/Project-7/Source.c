@@ -13,6 +13,13 @@ Smallest: 10
 Use as few if statements as possible.
 */
 
+/*
+I actually added extra requirements to the problem to make it more challenging.
+Unlike the problem, that requires only 4 digits to be read, my challenge is to
+allow users to enter as many values as possible, separated by whitespace, and 
+terminate the array of values by a sending a new line character to the stream.
+*/
+
 #include <stdlib.h>
 #include <ctype.h>
 #include <stdio.h>
