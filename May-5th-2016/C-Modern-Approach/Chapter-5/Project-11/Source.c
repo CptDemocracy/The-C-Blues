@@ -82,7 +82,7 @@ int main(void)
     }
     
     // play it safe
-    number %= 100;
+    number %= MAX_NUMBER + 1;
         
     if (number > 20) {
         printf("%s-", numTable[number - number % 10]);
