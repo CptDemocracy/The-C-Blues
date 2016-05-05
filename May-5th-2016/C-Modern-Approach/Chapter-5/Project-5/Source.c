@@ -5,7 +5,7 @@ Programming project 5 p.96
 In one state, single residents are subject to
 the following income tax:
 
-Income:            Amount of tax:
+Income:          Amount of tax:
 Not over $750    1% of income
 $750-$2,250      $7.50      plus 2% of the amount
 $2,250-$3,750    $37.50     plus 3% of the amount
@@ -56,7 +56,7 @@ int main(void)
 
 /*
 The tax is calculated based on the following table:
-    Income:            Amount of tax:
+    Income:          Amount of tax:
     Not over $750    1% of income
     $750-$2,250      $7.50      plus 2% of the amount
     $2,250-$3,750    $37.50     plus 3% of the amount
