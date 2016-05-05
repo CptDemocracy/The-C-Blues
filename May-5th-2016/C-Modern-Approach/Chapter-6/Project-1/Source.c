@@ -38,7 +38,7 @@ int main(void)
 
     while (1) 
     {
-        printf("Enter a number: ");
+        printf("Please enter a number. If done, please enter a 0 or a negative number: ");
         while (scanf("%lf", &number) != 1) {
             puts("Input invalid. Please try entering this number again.");
 
