@@ -19,14 +19,7 @@ corresponding description.
 */
 
 #include <stdlib.h>
-#include <string.h>
 #include <stdio.h>
-
-#define DEBUG
-
-#ifdef DEBUG
-#include <assert.h>
-#endif
 
 /*
 Arguments: 
