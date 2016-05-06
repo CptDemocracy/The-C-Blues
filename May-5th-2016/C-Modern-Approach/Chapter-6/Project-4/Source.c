@@ -25,11 +25,10 @@ Enter value of trade: 0
 int main(void) 
 {
     const double EPSILON = 1.0 * pow(10.0, (DBL_DIG - 1) * -1.0);
-
     double commission = 0.0;
     double value = 0.0;
-
     char c = '\0';
+    
     while (1)
     {
         printf("Enter value of trade (0 to quit): ");
