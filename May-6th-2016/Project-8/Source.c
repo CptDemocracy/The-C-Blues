@@ -21,8 +21,8 @@ between the numerical time and the AM/PM indicator.
 
 #define HOURS_PER_DAY           24
 #define MINUTES_PER_HOUR        60
-#define MIDDAY_HOUR                12
-#define BUFFER_SIZE                256
+#define MIDDAY_HOUR             12
+#define BUFFER_SIZE             256
 
 /*
     Similar to the bsearch function, except
