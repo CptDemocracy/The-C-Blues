@@ -261,6 +261,10 @@ struct ShortTimeStamp12Hour* ShortTimeStamp24HourConvertToShortTimeStamp12Hour(
 int StringToUpper(char* s) {
     if (!s) return 1;
 
-    while (toupper(*s++)) continue;
+    while (*s) {
+        *s = toupper(*s);
+        ++s;
+    }
+    
     return 0;
 }
