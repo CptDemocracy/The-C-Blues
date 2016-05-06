@@ -103,7 +103,7 @@ int Reverse(void* buffer, size_t elemSize, size_t count) {
         memcpy(beginPtr, endPtr, elemSize);
         memcpy(endPtr, tempBuffer, elemSize);
         beginPtr += elemSize;
-        endPtr     -= elemSize;
+        endPtr   -= elemSize;
     }
     free(tempBuffer);
 
