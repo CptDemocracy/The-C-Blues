@@ -19,7 +19,7 @@ Enter phone number: 1-800-COL-LECT
 
 int main(void) {
 
-    int lookupTable[UCHAR_MAX] = {
+    const int lookupTable[UCHAR_MAX] = {
         ['A'] = 2, ['a'] = 2,
         ['B'] = 2, ['b'] = 2,
         ['C'] = 2, ['c'] = 2,
