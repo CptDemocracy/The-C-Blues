@@ -30,7 +30,7 @@ letters in the word.
 
 int main(void) {
 
-    int lookupTable[UCHAR_MAX] = {
+    const int lookupTable[UCHAR_MAX] = {
         ['A'] = 1, ['a'] = 1,
         ['E'] = 1, ['e'] = 1,
         ['I'] = 1, ['i'] = 1,
