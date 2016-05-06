@@ -30,7 +30,7 @@ letters in the word.
 
 int main(void) {
 
-    const int lookupTable[UCHAR_MAX] = {
+    const int LOOKUP_TABLE[UCHAR_MAX] = {
         ['A'] = 1, ['a'] = 1,
         ['E'] = 1, ['e'] = 1,
         ['I'] = 1, ['i'] = 1,
@@ -75,7 +75,7 @@ int main(void) {
         count = 0;
 
         while ((c = getchar()) != '\n' && c != EOF) {
-            if (isalpha(c)) score += lookupTable[c];
+            if (isalpha(c)) score += LOOKUP_TABLE[c];
             ++count;
         }
         if (count > 0) printf("Score: %d\n", score);
