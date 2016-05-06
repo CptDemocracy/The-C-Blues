@@ -1,8 +1,15 @@
 /*
 K.N.King "C Programming. A Modern Approach."
-Programming project 1 p.157
+Programming project 4 p.157
 
+Write a program that translates an alphabetic phone number into numeric form:
 
+"Enter phone number: CALLATT
+2255288
+
+Enter phone number: 1-800-COL-LECT
+1-800-265-5328
+"
 */
 
 #include <stdlib.h>
