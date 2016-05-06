@@ -19,7 +19,7 @@ Enter phone number: 1-800-COL-LECT
 
 int main(void) {
 
-    const int lookupTable[UCHAR_MAX] = {
+    const int LOOKUP_TABLE[UCHAR_MAX] = {
         ['A'] = 2, ['a'] = 2,
         ['B'] = 2, ['b'] = 2,
         ['C'] = 2, ['c'] = 2,
@@ -55,7 +55,7 @@ int main(void) {
     {
         while ((c = getchar()) != '\n' && c != EOF) {
             if (isalpha(c)) {
-                printf("%d", lookupTable[c]);
+                printf("%d", LOOKUP_TABLE[c]);
             } else {
                 putchar(c);
             }
