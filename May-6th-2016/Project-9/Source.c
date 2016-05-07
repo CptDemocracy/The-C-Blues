@@ -108,7 +108,8 @@ struct ShortTimeStamp24Hour* ShortTimeStamp12HourConvertToShortTimeStamp24Hour(
 {
     if (!stamp || !OutResult) return NULL;
     
-    OutResult->hours = (stamp->timePeriod == PM && stamp->hours != MIDDAY_HOUR) ? stamp->hours + MIDDAY_HOUR : stamp->hours;
+    OutResult->hours = 
+        (stamp->timePeriod == PM && stamp->hours != MIDDAY_HOUR) ? stamp->hours + MIDDAY_HOUR : stamp->hours;
     OutResult->minutes = stamp->minutes;
 
     return OutResult;
