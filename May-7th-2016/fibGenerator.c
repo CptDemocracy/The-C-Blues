@@ -1,5 +1,4 @@
 #include <stdlib.h>
-#include <errno.h>
 #include <stdio.h>
 
 #define FIBONACCI_COUNT 40
