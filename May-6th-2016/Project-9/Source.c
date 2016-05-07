@@ -18,9 +18,9 @@ between the numerical time and the AM/PM indicator.
 #include <ctype.h>
 #include <stdio.h>
 
-#define BUFFER_SIZE         256
+#define BUFFER_SIZE            256
 #define MINUTES_PER_HOUR    60
-#define MIDDAY_HOUR         12
+#define MIDDAY_HOUR            12
 
 enum TimePeriod { AM, PM };
 
@@ -88,8 +88,10 @@ int main(void) {
         } else if (strcmp(buffer, "PM") == 0 || strcmp(buffer, "P") == 0) {
             userTime12Hour.timePeriod = PM;
             break;
+        } else {
+            fprintf(stderr, "Input invalid. Please try again.\n");
+            continue;
         }
-        continue;
     }
     userTime12Hour.hours = hours;
     userTime12Hour.minutes = minutes;
