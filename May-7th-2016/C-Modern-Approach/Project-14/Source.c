@@ -31,6 +31,7 @@ int main(void)
     printf("Please enter a positive number: ");
     while (!isNumberValid) 
     {
+        // assume the number is valid
         isNumberValid = 1;
         
         if ( scanf(" %lf", &num) != 1) {
