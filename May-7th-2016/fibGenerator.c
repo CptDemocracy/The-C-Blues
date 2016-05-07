@@ -1,10 +1,3 @@
-/*
-K.N.King "C Programming. A Modern Approach."
-Programming project 1 p.177
-
-
-*/
-
 #include <stdlib.h>
 #include <errno.h>
 #include <stdio.h>
