@@ -18,9 +18,9 @@ between the numerical time and the AM/PM indicator.
 #include <ctype.h>
 #include <stdio.h>
 
-#define BUFFER_SIZE            256
+#define BUFFER_SIZE         256
 #define MINUTES_PER_HOUR    60
-#define MIDDAY_HOUR            12
+#define MIDDAY_HOUR         12
 
 enum TimePeriod { AM, PM };
 
