@@ -75,8 +75,8 @@ int main(void) {
 
     /*    
         Departure time:         Arrival time:
-        8:00am                     10:16am
-        9:43am                     11:52am
+        8:00am                  10:16am
+        9:43am                  11:52am
         11:19am                 1:31pm
         12:47am                 3:00pm
     */
