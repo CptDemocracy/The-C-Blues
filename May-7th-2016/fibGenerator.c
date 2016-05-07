@@ -5,6 +5,10 @@
 
 long long FibGenerator(int reset);
 
+/* stub program for the fibonacci number generator that fills an array 
+of FIBONACCI_COUNT items (40) with fibonacci numbers and outputs the array 
+contents to the screen */
+
 int main(void)
 {
     long long fibc[FIBONACCI_COUNT] = { 0 };
