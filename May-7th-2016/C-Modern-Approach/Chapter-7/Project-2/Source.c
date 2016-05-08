@@ -42,7 +42,9 @@ int main(void)
                 lookupTable[c] += 1;
             }
         }
-        if (!isInputValid) fprintf(stderr, "Input invalid. Please try again.\n");
+        if (!isInputValid) {
+            fprintf(stderr, "Input invalid. Please try again.\n");
+        }
     }
     
     printf("%-12s", "Digit:");
