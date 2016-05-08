@@ -1,14 +1,11 @@
 /*
 K.N.King "C Programming. A Modern Approach."
 Programming project 1 p.177
-
 Modify the repdigit.c program of Section 8.1 so that
 it shows which digits (if any) were repeated:
-
 "Enter a number: 939577
 Repeated digits: 7 9
 "
-
 */
 
 #include <stdlib.h>
@@ -32,9 +29,8 @@ int main(void)
                 // can't break out on the spot since we still
                 // need to discard user input
                 isInputValid = 0;
-            }
-            else if (hashTable[c] == 0) {
-                hashTable[c] = 1;
+            } else {
+                hashTable[c] += 1;
             }
         }
         if (!isInputValid) {
@@ -45,7 +41,7 @@ int main(void)
     printf("Repeated digits: ");
 
     for (unsigned int i = 0; i < UCHAR_MAX; ++i) {
-        if (hashTable[i]) {
+        if (hashTable[i] > 1) {
             printf("%c ", i);
         }
     }
