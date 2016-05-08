@@ -26,6 +26,9 @@ int main(void)
     if (QueueNew(&inputCharQueue, sizeof(char)) != 0) {
         return EXIT_FAILURE;
     }
+
+    printf("Please enter a sentence: ");
+
     while ( (c = getchar()) != '\n' && c != EOF) {
         if (!(ispunct(c) && c != '\'')) (void)QueueEnqueue(&inputCharQueue, &c);
     }
@@ -42,6 +45,8 @@ int main(void)
         ++i;
     }    
 
+    printf("Reversal of sentence: ");
+
     substrPtr = &buffer[count];
     i = count;
 
@@ -57,7 +62,8 @@ int main(void)
             --substrPtr;
             --i;
         }
-        printf("%s ", substrPtr + 1);        
+
+        printf("%s ", substrPtr + 1);
     }
     putchar('\n');
 
