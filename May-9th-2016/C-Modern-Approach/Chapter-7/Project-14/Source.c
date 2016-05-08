@@ -18,7 +18,6 @@ Reversal of sentence: you can't swallow a cage can you?
 int main(void)
 {    
     char c = '\0';
-    char punct = '\0';
     char* substrPtr = NULL;
     int i = 0;
 
