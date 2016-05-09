@@ -18,98 +18,127 @@ The words are not anagrams.
 
 #include <stdlib.h>
 #include <limits.h>
+#include <ctype.h>
 #include <stdio.h>
 
 #include "Queue.h"
 
-int AreAnagrams(const char* s1, const char* s2);
+int IsStringEmpty(const char* s);
+
+int AreAnagrams(const char* s1, const char* s2, int isCaseSensitive);
 
 int main(void)
-{    
-    char c = '\0';
-    char* firstWord = NULL;
-    char* secondWord = NULL;
+{	
+	char c = '\0';
+	char* firstWord = NULL;
+	char* secondWord = NULL;
 
-    int count = 0;
-    int areAnagrams = 0;
+	int count = 0;
+	int areAnagrams = 0;
+	int isComparisonCaseSensitive = 0;
 
-    struct Queue inputCharQueue = { 0 };
-    if (QueueNew(&inputCharQueue, sizeof(char)) != 0) {
-        return EXIT_FAILURE;
-    }
+	struct Queue inputCharQueue = { 0 };
+	if (QueueNew(&inputCharQueue, sizeof(char)) != 0) {
+		return EXIT_FAILURE;
+	}
 
-    printf("Please enter the first word: ");
-    while ((c = getchar()) != '\n' && c != EOF) {
-        (void) QueueEnqueue(&inputCharQueue, &c);
-    }
-    count = QueueGetCount(&inputCharQueue);
-    
-    firstWord = (char*)calloc(count + 1, sizeof(char));
-    if (!firstWord) {
-        return EXIT_FAILURE;
-    }
+	while (1) {
+		printf("Please enter the first word (or press Enter to quit): ");
+		while ((c = getchar()) != '\n' && c != EOF) {
+			(void) QueueEnqueue(&inputCharQueue, &c);
+		}
+		count = QueueGetCount(&inputCharQueue);
+	
+		firstWord = (char*)calloc(count + 1, sizeof(char));
+		if (!firstWord) {
+			return EXIT_FAILURE;
+		}
 
-    for (int i = 0; i < count; ++i) {
-        QueueDequeue(&inputCharQueue, &firstWord[i]);
-    }
+		for (int i = 0; i < count; ++i) {
+			QueueDequeue(&inputCharQueue, &firstWord[i]);
+		}
+		firstWord[count] = '\0';
 
-    printf("Please enter the second word: ");
-    while ((c = getchar()) != '\n' && c != EOF) {
-        (void) QueueEnqueue(&inputCharQueue, &c);
-    }
-    count = QueueGetCount(&inputCharQueue);
+		if (IsStringEmpty(firstWord)) {
+			printf("Thank you for using our application.\n");
+			break;
+		}
 
-    secondWord = (char*)calloc(count + 1, sizeof(char));
-    if (!secondWord) {
-        return EXIT_FAILURE;
-    }
+		printf("Please enter the second word: ");
+		while ((c = getchar()) != '\n' && c != EOF) {
+			(void) QueueEnqueue(&inputCharQueue, &c);
+		}
+		count = QueueGetCount(&inputCharQueue);
 
-    for (int i = 0; i < count; ++i) {
-        QueueDequeue(&inputCharQueue, &secondWord[i]);
-    }
+		secondWord = (char*)calloc(count + 1, sizeof(char));
+		if (!secondWord) {
+			return EXIT_FAILURE;
+		}
 
-    areAnagrams = AreAnagrams(firstWord, secondWord);
+		for (int i = 0; i < count; ++i) {
+			QueueDequeue(&inputCharQueue, &secondWord[i]);
+		}
+		secondWord[count] = '\0';
 
-    printf(
-        "\"%s\" and \"%s\" are %sanagrams.\n", 
-        firstWord, 
-        secondWord, 
-        areAnagrams ? "" : "not ");
-    
-    free(firstWord);
-    firstWord = NULL;
+		areAnagrams = AreAnagrams(firstWord, secondWord, isComparisonCaseSensitive);
 
-    free(secondWord);
-    secondWord = NULL;
+		printf(
+			"\"%s\" and \"%s\" are %sanagrams.\n", 
+			firstWord, 
+			secondWord, 
+			areAnagrams ? "" : "not ");
+	}
+	
+	free(firstWord);
+	firstWord = NULL;
 
-    QueueDispose(&inputCharQueue);
+	free(secondWord);
+	secondWord = NULL;
+
+	QueueDispose(&inputCharQueue);
 
     getchar();
     return EXIT_SUCCESS;
 }
 
-int AreAnagrams(const char* s1, const char* s2) {
-    if (!s1) {
-        return 1;
-    }
-    if (!s2) {
-        return 2;
-    }    
-    char lookupTable[UCHAR_MAX] = { 0 };    
+int AreAnagrams(const char* s1, const char* s2, int isCaseSensitive) {
+	if (!s1) {
+		return 1;
+	}
+	if (!s2) {
+		return 2;
+	}	
+	char lookupTable[UCHAR_MAX] = { 0 };	
 
-    char c = '\0';
-    int count1 = 0;
-    int count2 = 0;
+	int count1 = 0;
+	int count2 = 0;
 
-    while ((c = *s1++) != '\0') {
-        lookupTable[c] = 1;
-        ++count1;
-    }
-    while ((c = *s2++) != '\0') {
-        if (count1 == count2 || lookupTable[c] == 0) {
-            return 0;
-        }
-        ++count2;
-    }
-    return 1;
+	char c = '\0';
+
+	while ((c = *s1++) != '\0') {
+
+		if (!isCaseSensitive) c = tolower(c);
+
+		lookupTable[c] = 1;
+		++count1;
+	}
+	while ((c = *s2++) != '\0') {
+
+		if (!isCaseSensitive) c = tolower(c);
+
+		if (count1 == count2 || lookupTable[c] == 0) {
+			return 0;
+		}
+		++count2;
+	}
+	return 1;
+}
+
+int IsStringEmpty(const char* s) {
+	if (!s) {
+		return 1;
+	}
+	while (isspace(*s)) ++s;
+	if (*s == '\0') return 1;
+	return 0;
 }
