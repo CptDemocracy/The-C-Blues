@@ -73,7 +73,7 @@ int main(void)
                             "sure you are entering an integer value.\n");
         }
     }    
-    EncryptCaesar(inputBuffer, shift, inputBuffer);
+    (void) EncryptCaesar(inputBuffer, shift, inputBuffer);
     printf("Encrypted message: %s\n", inputBuffer);
 
     free(inputBuffer);
