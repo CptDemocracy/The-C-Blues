@@ -21,21 +21,28 @@ Parentheses/braces are nested properly
 
 const static int STACK_INIT_CAPACITY = 4;
 
+const static int STACK_SUCCESS                    = 0;
+const static int STACK_INVALID_ARGUMENT_ERROR    = 1;
+const static int STACK_OUT_OF_MEMORY_ERROR        = 2;
+const static int STACK_UNDERFLOW_ERROR            = 3;
+const static int STACK_OVERFLOW_ERROR            = 4; /* unused */
+const static int STACK_INVALID_OPERATION_ERROR    = 5;
+
 static int StackEnsureCapacity(struct Stack* self, size_t minCapacity) {
     if (!self) {
         errno = EINVAL;
-        return 1;
+        return STACK_INVALID_ARGUMENT_ERROR;
     }
     if (minCapacity < 1) {
         errno = EINVAL;
-        return 2;
+        return STACK_INVALID_ARGUMENT_ERROR;
     }
     if (minCapacity > self->_itemCapacity) {
         minCapacity = minCapacity > self->_itemCapacity * 2 ? minCapacity : self->_itemCapacity * 2;
         void* newItems = calloc(minCapacity, self->_itemSize);
         if (!newItems) {
             errno = ENOMEM;
-            return 3;
+            return STACK_OUT_OF_MEMORY_ERROR;
         }
         memcpy(newItems, self->_items, self->_itemCount * self->_itemSize);
         free(self->_items);
@@ -44,30 +51,30 @@ static int StackEnsureCapacity(struct Stack* self, size_t minCapacity) {
         self->_itemCapacity = minCapacity;
     }
 
-    return 0;
+    return STACK_SUCCESS;
 }
 
 int StackNew(struct Stack* self, size_t itemSize, void (*disposeFn)(void*)) {
     if (!self) {
         errno = EINVAL;
-        return 1;
+        return STACK_INVALID_ARGUMENT_ERROR;
     }
     if (itemSize < 1) {
         errno = EINVAL;
-        return 2;
+        return STACK_INVALID_ARGUMENT_ERROR;
     }
 
     self->_items = calloc(STACK_INIT_CAPACITY, itemSize);
     if (!self->_items) {
         errno = ENOMEM;
-        return 3;
+        return STACK_OUT_OF_MEMORY_ERROR;
     }
     self->_itemCapacity = STACK_INIT_CAPACITY;
     self->_itemCount = 0;
     self->_itemSize = itemSize;
     self->disposeFn = disposeFn;
 
-    return 0;
+    return STACK_SUCCESS;
 }
 
 void StackDispose(struct Stack* self) {
@@ -98,32 +105,32 @@ size_t StackGetCount(struct Stack* self) {
 int StackPeek(struct Stack* self, void* OutResult) {
     if (!self) {
         errno = EINVAL;
-        return 1;
+        return STACK_INVALID_ARGUMENT_ERROR;
     }
     if (!OutResult) {
         errno = EINVAL;
-        return 2;
+        return STACK_INVALID_ARGUMENT_ERROR;
     }
     if (self->_itemCount < 1) {
         errno = EPERM;
-        return 3;
+        return STACK_INVALID_OPERATION_ERROR;
     }
     void* item = NULL;
 
     item = (char*)self->_items + self->_itemSize * (self->_itemCount - 1);
     memcpy(OutResult, item, self->_itemSize);
 
-    return 0;
+    return STACK_SUCCESS;
 }
 
 int StackPush(struct Stack* self, const void* item) {
     if (!self) {
         errno = EINVAL;
-        return 1;
+        return STACK_INVALID_ARGUMENT_ERROR;
     }
     if (!item) {
         errno = EINVAL;
-        return 2;
+        return STACK_INVALID_ARGUMENT_ERROR;
     }
     
     int error = 0;
@@ -137,17 +144,17 @@ int StackPush(struct Stack* self, const void* item) {
     memcpy(copyToAddr, item, self->_itemSize);
     ++self->_itemCount;
 
-    return 0;    
+    return STACK_SUCCESS;    
 }
 
 int StackPop(struct Stack* self, void* OutResult) {
     if (!self) {
         errno = EINVAL;
-        return 1;
+        return STACK_INVALID_ARGUMENT_ERROR;
     }
     if (self->_itemCount < 1) {
         errno = EPERM;
-        return 2;
+        return STACK_UNDERFLOW_ERROR;
     }
     void* popAddr = NULL;
     popAddr = (char*)self->_items + self->_itemSize * (self->_itemCount - 1);
@@ -159,5 +166,5 @@ int StackPop(struct Stack* self, void* OutResult) {
     }
     --self->_itemCount;
 
-    return 0;
+    return STACK_SUCCESS;
 }
