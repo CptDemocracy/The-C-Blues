@@ -21,12 +21,12 @@ Parentheses/braces are nested properly
 
 const static int STACK_INIT_CAPACITY = 4;
 
-const static int STACK_SUCCESS                    = 0;
+const static int STACK_SUCCESS                   = 0;
 const static int STACK_INVALID_ARGUMENT_ERROR    = 1;
-const static int STACK_OUT_OF_MEMORY_ERROR        = 2;
-const static int STACK_UNDERFLOW_ERROR            = 3;
+const static int STACK_OUT_OF_MEMORY_ERROR       = 2;
+const static int STACK_UNDERFLOW_ERROR           = 3;
 const static int STACK_OVERFLOW_ERROR            = 4; /* unused */
-const static int STACK_INVALID_OPERATION_ERROR    = 5;
+const static int STACK_INVALID_OPERATION_ERROR   = 5;
 
 static int StackEnsureCapacity(struct Stack* self, size_t minCapacity) {
     if (!self) {
