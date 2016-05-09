@@ -55,6 +55,7 @@ int main(void)
     };
     
     unsigned int seed = (unsigned int)time(NULL);
+    srand(seed);
 
     int row = 0;
     int col = 0;
