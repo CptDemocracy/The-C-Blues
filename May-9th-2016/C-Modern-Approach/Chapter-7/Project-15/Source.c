@@ -33,6 +33,7 @@ int main(void)
     int count = 0;
     char* inputBuffer = NULL;
     int shift = 0;
+    int isInputValid = 0;
 
     struct Queue inputCharQueue = { 0 };
     if (QueueNew(&inputCharQueue, sizeof(char)) != 0) {
@@ -51,16 +52,27 @@ int main(void)
     for (int i = 0; i < count; ++i) {
         (void) QueueDequeue(&inputCharQueue, &inputBuffer[i]);
     }
-    printf("Enter shift amount: ");
-    while (scanf(" %d", &shift) != 1) {
-        fprintf(stderr, "Invalid value for the shift. Please make "
-                        "sure you are entering an integer value.\n");
+    while (!isInputValid)
+    {
+        isInputValid = 1;
+                
+        printf("Please enter shift amount: ");
 
-        // discard irrelevant trailing input
-        while ((c = getchar()) != '\n' && c != EOF) continue;
-    }
-    while ((c = getchar()) != '\n' && c != EOF) continue;
-    
+        if (scanf(" %d", &shift) != 1) {
+            isInputValid = 0;
+        }
+        // check if there is any trailing non-whitespace input,
+        // if there is, input is illegal
+        while ((c = getchar()) != '\n' && c != EOF) {
+            if (!isspace(c)) {
+                isInputValid = 0;
+            }
+        }
+        if (!isInputValid) {
+            fprintf(stderr, "Invalid value for the shift. Please make "
+                            "sure you are entering an integer value.\n");
+        }
+    }    
     EncryptCaesar(inputBuffer, shift, inputBuffer);
     printf("Encrypted message: %s\n", inputBuffer);
 
