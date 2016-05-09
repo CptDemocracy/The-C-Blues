@@ -104,7 +104,7 @@ int main(void)
         char c = '\0';
         printf("Would you like to play again? (y/n)\n");
         while (scanf(" %c", &answer) != 1) {
-            printf(    "I am sorry, didn't quite get it.\n"
+            printf( "I am sorry, didn't quite get it.\n"
                     "Would you like to play again? (y/n)\n");
 
             while ((c = getchar()) != '\n' && c != EOF) continue;
