@@ -1,9 +1,6 @@
 #ifndef DYNAMICBUFFER_H
 #define DYNAMICBUFFER_H
 
-#include <stdlib.h>
-#include <stdio.h>
-
 struct DynamicBuffer {
     char* _buffer;
     size_t _size;
