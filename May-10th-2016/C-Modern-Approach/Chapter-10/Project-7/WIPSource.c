@@ -36,7 +36,7 @@ const struct DigitBits* DigitToBits(char c);
 int main(void) {
 
     //const char HORIZONTAL    = '_';
-    //const char VERTICAL        = '|';
+    //const char VERTICAL      = '|';
     //const char WHITESPACE    = ' ';
 
     //struct DigitBits* digits[MAX_DIGITS] = { 0 };
@@ -65,18 +65,18 @@ int main(void) {
 void DigitBitsOutput(const struct DigitBits* digit, FILE* stream) {
     if (!digit || !stream) return;
 
-    const static char* VERTICAL        = "|";
+    const static char* VERTICAL      = "|";
     const static char* HORIZONTAL    = "_";
 
     fprintf(stream, " %s \n"
                     "%s%s%s\n"
                     "%s%s%s\n",
-        digit->bits[0] ? HORIZONTAL : " ", 
+        digit->bits[0] ? HORIZONTAL  : " ", 
         digit->bits[1] ? VERTICAL    : " ",  
-        digit->bits[2] ? HORIZONTAL : " ", 
+        digit->bits[2] ? HORIZONTAL  : " ", 
         digit->bits[3] ? VERTICAL    : " ",  
         digit->bits[4] ? VERTICAL    : " ",  
-        digit->bits[5] ? HORIZONTAL : " ", 
+        digit->bits[5] ? HORIZONTAL  : " ", 
         digit->bits[6] ? VERTICAL    : " ");
 }
 
