@@ -47,7 +47,7 @@ static int DynamicBufferEnsureCapacity(struct DynamicBuffer* self, size_t minCap
             errno = ENOMEM;
             return ENOMEM;
         }
-        strcpy(newbuf, self->_buffer);
+        memcpy(newbuf, self->_buffer, sizeof(char) * self->_size);
         free(self->_buffer);
         self->_buffer = newbuf;
         self->_capacity = newcap;
@@ -63,7 +63,7 @@ const char* DynamicBufferFGetString(struct DynamicBuffer* self, FILE* stream) {
     char c = '\0';
     int errorCode = 0;
     
-   size_t charsRead = 0;
+    size_t charsRead = 0;
     while ( (c = fgetc(stream)) != EOF && c != '\n') {
         // request extra byte for the null terminating character
         errorCode = DynamicBufferEnsureCapacity(self, self->_size + 2);
