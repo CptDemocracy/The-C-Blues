@@ -7,9 +7,9 @@ and then displays the number, using characters to simulate
 the effect of a seven-segment display:
 
 "Enter a number: 491-9014
-     _           _   _
-|_|    |_|        | |_| | |    | |_|
-  |     _|        |  _| |_|    |   |
+      _            _   _
+|_|  |_|        | |_| | |    | |_|
+  |   _|        |  _| |_|    |   |
 "
 Characters other than digits should be ignored. Write the program
 so that the maximum number of digits is controlled by a macro named
@@ -21,8 +21,8 @@ MAX_DIGITS, which has the value 10.
 #include <stdio.h>
 #include <ctype.h>
 
-#define DIGIT_BIT_COUNT 7
-#define MAX_DIGITS        10
+#define DIGIT_BIT_COUNT  7
+#define MAX_DIGITS       10
 
 struct DigitBits 
 {
