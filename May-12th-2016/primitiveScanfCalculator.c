@@ -1,11 +1,3 @@
-/*
-K.N.King "C Programming. A Modern Approach."
-Programming project 1 p.346
-
-
-
-*/
-
 #include <stdlib.h>
 #include <ctype.h>
 #include <stdio.h>
