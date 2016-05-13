@@ -15,7 +15,7 @@ an error message.
 #include <ctype.h>
 #include <stdio.h>
 
-#include "FixedDictionary.h"
+#include "Dictionary.h"
 #include "DynamicBuffer.h"
 
 enum Country {
@@ -123,12 +123,12 @@ const char* COUNTRY_CODES[] = {
     [Country_Vietnam]        = "84",
 };
 
-int CountryCodeDictionaryInitialize(struct FixedDictionary* dict);
+int CountryCodeDictionaryInitialize(struct Dictionary* dict);
 
 int main(void) {
 
     struct DynamicBuffer dynBuffer = { 0 };
-    struct FixedDictionary countryCodeDict = { 0 };
+    struct Dictionary countryCodeDict = { 0 };
     enum Country country = 0;
     const char* countryString = NULL;
     const char* countryCodeString = NULL;
@@ -141,7 +141,7 @@ int main(void) {
             break;
         }
 
-        if (FixedDictionaryNew(&countryCodeDict, 4U, sizeof(char*), sizeof(enum Country)) != 0) {
+        if (DictionaryNew(&countryCodeDict, 4U, sizeof(char*), sizeof(enum Country)) != 0) {
             exitState = EXIT_FAILURE;
             break;
         }
@@ -149,7 +149,7 @@ int main(void) {
 
         while (1)
         {
-            (void) printf("Please enter a country code: ");
+            (void) printf("Please enter a country code (or press Enter to quit): ");
 
             countryCodeString = DynamicBufferGetString(&dynBuffer);
             if (!countryCodeString) {
@@ -163,7 +163,7 @@ int main(void) {
             if (*countryCodeString == '\0') {
                 (void) printf("Thank you for using our application!\n");
                 break;
-            } else if (FixedDictionaryGet(&countryCodeDict, countryCodeString, &country)) {
+            } else if (DictionaryGet(&countryCodeDict, countryCodeString, &country)) {
                 countryString = COUNTRY_STRING_TABLE[country];
                 (void) printf("%s\n", countryString);
             } else {
@@ -178,14 +178,14 @@ int main(void) {
     } while (0);
 
     DynamicBufferDispose(&dynBuffer);
-    FixedDictionaryDispose(&countryCodeDict);
+    DictionaryDispose(&countryCodeDict);
 
     (void) getchar();
 
     return exitState;
 }
 
-int CountryCodeDictionaryInitialize(struct FixedDictionary* dict) {
+int CountryCodeDictionaryInitialize(struct Dictionary* dict) {
     if (!dict) {
         return 1;
     }
@@ -195,131 +195,131 @@ int CountryCodeDictionaryInitialize(struct FixedDictionary* dict) {
     
     do {
         country = Country_Argentina;
-        isAddSuccessful = FixedDictionaryAdd(dict, COUNTRY_CODES[Country_Argentina], &country);
+        isAddSuccessful = DictionaryAdd(dict, COUNTRY_CODES[Country_Argentina], &country);
         if (!isAddSuccessful) break;
 
         country = Country_Bangladesh;
-        isAddSuccessful = FixedDictionaryAdd(dict, COUNTRY_CODES[Country_Bangladesh], &country);
+        isAddSuccessful = DictionaryAdd(dict, COUNTRY_CODES[Country_Bangladesh], &country);
         if (!isAddSuccessful) break;
 
         country = Country_Brazil;
-        isAddSuccessful = FixedDictionaryAdd(dict, COUNTRY_CODES[Country_Brazil], &country);
+        isAddSuccessful = DictionaryAdd(dict, COUNTRY_CODES[Country_Brazil], &country);
         if (!isAddSuccessful) break;
 
         country = Country_Burma;
-        isAddSuccessful = FixedDictionaryAdd(dict, COUNTRY_CODES[Country_Burma], &country);
+        isAddSuccessful = DictionaryAdd(dict, COUNTRY_CODES[Country_Burma], &country);
         if (!isAddSuccessful) break;
 
         country = Country_China;
-        isAddSuccessful = FixedDictionaryAdd(dict, COUNTRY_CODES[Country_China], &country);
+        isAddSuccessful = DictionaryAdd(dict, COUNTRY_CODES[Country_China], &country);
         if (!isAddSuccessful) break;
 
         country = Country_Colombia;
-        isAddSuccessful = FixedDictionaryAdd(dict, COUNTRY_CODES[Country_Colombia], &country);
+        isAddSuccessful = DictionaryAdd(dict, COUNTRY_CODES[Country_Colombia], &country);
         if (!isAddSuccessful) break;
 
         country = Country_Congo;
-        isAddSuccessful = FixedDictionaryAdd(dict, COUNTRY_CODES[Country_Congo], &country);
+        isAddSuccessful = DictionaryAdd(dict, COUNTRY_CODES[Country_Congo], &country);
         if (!isAddSuccessful) break;
 
         country = Country_Egypt;
-        isAddSuccessful = FixedDictionaryAdd(dict, COUNTRY_CODES[Country_Egypt], &country);
+        isAddSuccessful = DictionaryAdd(dict, COUNTRY_CODES[Country_Egypt], &country);
         if (!isAddSuccessful) break;
 
         country = Country_Ethiopia;
-        isAddSuccessful = FixedDictionaryAdd(dict, COUNTRY_CODES[Country_Ethiopia], &country);
+        isAddSuccessful = DictionaryAdd(dict, COUNTRY_CODES[Country_Ethiopia], &country);
         if (!isAddSuccessful) break;
 
         country = Country_France;
-        isAddSuccessful = FixedDictionaryAdd(dict, COUNTRY_CODES[Country_France], &country);
+        isAddSuccessful = DictionaryAdd(dict, COUNTRY_CODES[Country_France], &country);
         if (!isAddSuccessful) break;
 
         country = Country_Germany;
-        isAddSuccessful = FixedDictionaryAdd(dict, COUNTRY_CODES[Country_Germany], &country);
+        isAddSuccessful = DictionaryAdd(dict, COUNTRY_CODES[Country_Germany], &country);
         if (!isAddSuccessful) break;
 
         country = Country_India;
-        isAddSuccessful = FixedDictionaryAdd(dict, COUNTRY_CODES[Country_India], &country);
+        isAddSuccessful = DictionaryAdd(dict, COUNTRY_CODES[Country_India], &country);
         if (!isAddSuccessful) break;
 
         country = Country_Indonesia;
-        isAddSuccessful = FixedDictionaryAdd(dict, COUNTRY_CODES[Country_Indonesia], &country);
+        isAddSuccessful = DictionaryAdd(dict, COUNTRY_CODES[Country_Indonesia], &country);
         if (!isAddSuccessful) break;
 
         country = Country_Iran;
-        isAddSuccessful = FixedDictionaryAdd(dict, COUNTRY_CODES[Country_Iran], &country);
+        isAddSuccessful = DictionaryAdd(dict, COUNTRY_CODES[Country_Iran], &country);
         if (!isAddSuccessful) break;
 
         country = Country_Italy;
-        isAddSuccessful = FixedDictionaryAdd(dict, COUNTRY_CODES[Country_Italy], &country);
+        isAddSuccessful = DictionaryAdd(dict, COUNTRY_CODES[Country_Italy], &country);
         if (!isAddSuccessful) break;
 
         country = Country_Japan;
-        isAddSuccessful = FixedDictionaryAdd(dict, COUNTRY_CODES[Country_Japan], &country);
+        isAddSuccessful = DictionaryAdd(dict, COUNTRY_CODES[Country_Japan], &country);
         if (!isAddSuccessful) break;
 
         country = Country_Mexico;
-        isAddSuccessful = FixedDictionaryAdd(dict, COUNTRY_CODES[Country_Mexico], &country);
+        isAddSuccessful = DictionaryAdd(dict, COUNTRY_CODES[Country_Mexico], &country);
         if (!isAddSuccessful) break;
 
         country = Country_Nigeria;
-        isAddSuccessful = FixedDictionaryAdd(dict, COUNTRY_CODES[Country_Nigeria], &country);
+        isAddSuccessful = DictionaryAdd(dict, COUNTRY_CODES[Country_Nigeria], &country);
         if (!isAddSuccessful) break;
 
         country = Country_Pakistan;
-        isAddSuccessful = FixedDictionaryAdd(dict, COUNTRY_CODES[Country_Pakistan], &country);
+        isAddSuccessful = DictionaryAdd(dict, COUNTRY_CODES[Country_Pakistan], &country);
         if (!isAddSuccessful) break;
 
         country = Country_Philippines;
-        isAddSuccessful = FixedDictionaryAdd(dict, COUNTRY_CODES[Country_Philippines], &country);
+        isAddSuccessful = DictionaryAdd(dict, COUNTRY_CODES[Country_Philippines], &country);
         if (!isAddSuccessful) break;
 
         country = Country_Poland;
-        isAddSuccessful = FixedDictionaryAdd(dict, COUNTRY_CODES[Country_Poland], &country);
+        isAddSuccessful = DictionaryAdd(dict, COUNTRY_CODES[Country_Poland], &country);
         if (!isAddSuccessful) break;
 
         country = Country_Russia;
-        isAddSuccessful = FixedDictionaryAdd(dict, COUNTRY_CODES[Country_Russia], &country);
+        isAddSuccessful = DictionaryAdd(dict, COUNTRY_CODES[Country_Russia], &country);
         if (!isAddSuccessful) break;
 
         country = Country_SouthAfrica;
-        isAddSuccessful = FixedDictionaryAdd(dict, COUNTRY_CODES[Country_SouthAfrica], &country);
+        isAddSuccessful = DictionaryAdd(dict, COUNTRY_CODES[Country_SouthAfrica], &country);
         if (!isAddSuccessful) break;
 
         country = Country_SouthKorea;
-        isAddSuccessful = FixedDictionaryAdd(dict, COUNTRY_CODES[Country_SouthKorea], &country);
+        isAddSuccessful = DictionaryAdd(dict, COUNTRY_CODES[Country_SouthKorea], &country);
         if (!isAddSuccessful) break;
 
         country = Country_Spain;
-        isAddSuccessful = FixedDictionaryAdd(dict, COUNTRY_CODES[Country_Spain], &country);
+        isAddSuccessful = DictionaryAdd(dict, COUNTRY_CODES[Country_Spain], &country);
         if (!isAddSuccessful) break;
 
         country = Country_Sudan;
-        isAddSuccessful = FixedDictionaryAdd(dict, COUNTRY_CODES[Country_Sudan], &country);
+        isAddSuccessful = DictionaryAdd(dict, COUNTRY_CODES[Country_Sudan], &country);
         if (!isAddSuccessful) break;
 
         country = Country_Thailand;
-        isAddSuccessful = FixedDictionaryAdd(dict, COUNTRY_CODES[Country_Thailand], &country);
+        isAddSuccessful = DictionaryAdd(dict, COUNTRY_CODES[Country_Thailand], &country);
         if (!isAddSuccessful) break;
 
         country = Country_Turkey;
-        isAddSuccessful = FixedDictionaryAdd(dict, COUNTRY_CODES[Country_Turkey], &country);
+        isAddSuccessful = DictionaryAdd(dict, COUNTRY_CODES[Country_Turkey], &country);
         if (!isAddSuccessful) break;
 
         country = Country_Ukraine;
-        isAddSuccessful = FixedDictionaryAdd(dict, COUNTRY_CODES[Country_Ukraine], &country);
+        isAddSuccessful = DictionaryAdd(dict, COUNTRY_CODES[Country_Ukraine], &country);
         if (!isAddSuccessful) break;
     
         country = Country_UK;
-        isAddSuccessful = FixedDictionaryAdd(dict, COUNTRY_CODES[Country_UK], &country);
+        isAddSuccessful = DictionaryAdd(dict, COUNTRY_CODES[Country_UK], &country);
         if (!isAddSuccessful) break;
 
         country = Country_US;
-        isAddSuccessful = FixedDictionaryAdd(dict, COUNTRY_CODES[Country_US], &country);
+        isAddSuccessful = DictionaryAdd(dict, COUNTRY_CODES[Country_US], &country);
         if (!isAddSuccessful) break;
 
         country = Country_Vietnam;
-        isAddSuccessful = FixedDictionaryAdd(dict, COUNTRY_CODES[Country_Vietnam], &country);
+        isAddSuccessful = DictionaryAdd(dict, COUNTRY_CODES[Country_Vietnam], &country);
         if (!isAddSuccessful) break;
     } while (0);
 
