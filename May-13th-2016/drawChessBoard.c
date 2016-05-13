@@ -29,7 +29,7 @@ enum ChessBoardRow {
     ChessBoardRow_Eight
 };
 
-const static char* CHESS_BOARD_ROW_STRING_TABLE[] = {
+const char* CHESS_BOARD_ROW_STRING_TABLE[] = {
     [ChessBoardRow_One]     = "1",
     [ChessBoardRow_Two]     = "2",
     [ChessBoardRow_Three]   = "3",
@@ -51,7 +51,7 @@ enum ChessBoardColumn {
     ChessBoardColumn_H
 };
 
-const static char* CHESS_BOARD_COLUMN_STRING_TABLE[] = {
+const char* CHESS_BOARD_COLUMN_STRING_TABLE[] = {
     [ChessBoardColumn_A] = "A",
     [ChessBoardColumn_B] = "B",
     [ChessBoardColumn_C] = "C",
