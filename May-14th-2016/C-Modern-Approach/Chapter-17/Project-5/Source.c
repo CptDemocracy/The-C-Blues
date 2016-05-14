@@ -36,61 +36,57 @@ int main(void) {
 
     if (DynamicBufferNew(&dynBuffer) != 0) {
         exitState = EXIT_FAILURE;
-        return exitState;
-    }
-
-    if (VectorNew(&inputCharVector, sizeof(char*), NULL) != 0) {
-        DynamicBufferDispose(&dynBuffer);
-        return exitState;
-    }
-
-    do {
-        (void) printf("Please enter word: ");
-
-        userInput = DynamicBufferGetString(&dynBuffer);
-        if (!userInput) {
-            exitState = EXIT_FAILURE;
-            break;
-        }
-        isEmpty = IsStringEmpty(userInput);
-
-        if (!isEmpty) {
-            size_t inputCount = DynamicBufferGetCount(&dynBuffer);
-            temp = (char*)calloc(inputCount + 1, sizeof(char));
-            if (!temp) {
-                exitState = EXIT_FAILURE;
-                return exitState;
-            }
-            (void) strcpy(temp, userInput);
-            (void) VectorAdd(&inputCharVector, &temp);
-            (void) DynamicBufferClear(&dynBuffer);
-        }
-    } while (!isEmpty);
-
-    size_t wordCount = VectorGetCount(&inputCharVector);
-
-    char** words = (char**)calloc(wordCount, sizeof(char*));
-    if (!words) {
+    } else if (VectorNew(&inputCharVector, sizeof(char*), NULL) != 0) {
         exitState = EXIT_FAILURE;
-        return exitState;
-    }
-    for (size_t i = 0U; i < wordCount; ++i) {
-        (void) VectorGet(&inputCharVector, i, &words[i]);
-    }
-    qsort(words, wordCount, sizeof(char*), StrCmp);
+    } else {
+        do {
+            (void) printf("Please enter word: ");
 
-    for (size_t i = 0U; i < wordCount; ++i) {
-        (void) printf("%s\n", words[i]);
-    }
-    free(words);
+            userInput = DynamicBufferGetString(&dynBuffer);
+            if (!userInput) {
+                exitState = EXIT_FAILURE;
+                break;
+            }
+            isEmpty = IsStringEmpty(userInput);
 
-    for (size_t i = 0U; i < wordCount; ++i) {
-        (void) VectorGet(&inputCharVector, i, &temp);
-        free(temp);
+            if (!isEmpty) {
+                size_t inputCount = DynamicBufferGetCount(&dynBuffer);
+                temp = (char*)calloc(inputCount + 1, sizeof(char));
+                if (!temp) {
+                    exitState = EXIT_FAILURE;
+                    return exitState;
+                }
+                (void) strcpy(temp, userInput);
+                (void) VectorAdd(&inputCharVector, &temp);
+                (void) DynamicBufferClear(&dynBuffer);
+            }
+        } while (!isEmpty);
+
+        size_t wordCount = VectorGetCount(&inputCharVector);
+
+        char** words = (char**)calloc(wordCount, sizeof(char*));
+        if (!words) {
+            exitState = EXIT_FAILURE;
+            return exitState;
+        }
+        for (size_t i = 0U; i < wordCount; ++i) {
+            (void) VectorGet(&inputCharVector, i, &words[i]);
+        }
+        qsort(words, wordCount, sizeof(char*), StrCmp);
+
+        for (size_t i = 0U; i < wordCount; ++i) {
+            (void) printf("%s\n", words[i]);
+        }
+        free(words);
+
+        for (size_t i = 0U; i < wordCount; ++i) {
+            (void) VectorGet(&inputCharVector, i, &temp);
+            free(temp);
+        }
     }
     VectorDispose(&inputCharVector);
     DynamicBufferDispose(&dynBuffer);
-    
+
     (void) getchar();
 
     return exitState;
