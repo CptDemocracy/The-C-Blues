@@ -37,6 +37,7 @@ int main(void) {
     if (DynamicBufferNew(&dynBuffer) != 0) {
         exitState = EXIT_FAILURE;
     } else if (VectorNew(&inputCharVector, sizeof(char*), NULL) != 0) {
+        DynamicBufferDispose(&dynBuffer);
         exitState = EXIT_FAILURE;
     } else {
         do {
@@ -83,11 +84,11 @@ int main(void) {
             (void) VectorGet(&inputCharVector, i, &temp);
             free(temp);
         }
+        
+        VectorDispose(&inputCharVector);
+        DynamicBufferDispose(&dynBuffer);
     }
     
-    VectorDispose(&inputCharVector);
-    DynamicBufferDispose(&dynBuffer);
-
     (void) getchar();
 
     return exitState;
