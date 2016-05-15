@@ -3,7 +3,7 @@
 Algorithms in C (Sedgewick)
 p.34 Chapter 3
 
-Write a program to fill in a two-dimensional array of boolean values
+1. Write a program to fill in a two-dimensional array of boolean values
 by setting a[i][j] to 1 if the greatest common divisor of i and j is
 1 and to 0 otherwise.
 
