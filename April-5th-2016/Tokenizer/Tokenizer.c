@@ -53,8 +53,13 @@ static int SplitPredicateCaseInsensitive(char curr, char last) {
 
     // disable case bits to provide case 
     // insensitive comparison
-    charFam1 = charFam1 & (~Lower) & (~Upper);
-    charFam2 = charFam2 & (~Lower) & (~Upper);
+    //
+    // disable the XDigit bits to avoid unnecessary
+    // tokenization upon encountering xdigit-char-types.
+    //
+    //
+    charFam1 = charFam1 & (~Lower) & (~Upper) & (~XDigit);
+    charFam2 = charFam2 & (~Lower) & (~Upper) & (~XDigit);
 
     if (charFam1 == charFam2) {
         return 0;
@@ -65,6 +70,13 @@ static int SplitPredicateCaseInsensitive(char curr, char last) {
 static int SplitPredicateCaseSensitive(char curr, char last) {
     enum CharFamily charFam1 = GetCharFamily(curr);
     enum CharFamily charFam2 = GetCharFamily(last);
+    
+    // disable the XDigit bits to avoid unnecessary
+    // tokenization upon encountering xdigit-char-types.
+    //
+    //
+    charFam1 = charFam1 & (~XDigit);
+    charFam2 = charFam2 & (~XDigit);
 
     if (charFam1 == charFam2) {
         return 0;
