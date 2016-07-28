@@ -13,6 +13,9 @@ Parentheses/braces are nested properly
 
 */
 
+#ifndef STACK_H
+#define STACK_H
+
 #include <stdlib.h>
 
 struct Stack
@@ -35,3 +38,5 @@ int StackPeek(struct Stack* self, void* OutResult);
 int StackPush(struct Stack* self, const void* item);
 
 int StackPop(struct Stack* self, void* OutResult);
+
+#endif /* STACK_H */
