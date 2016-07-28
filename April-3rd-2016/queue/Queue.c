@@ -100,12 +100,12 @@ static int QueueEnsureCapacity(struct Queue* self, size_t minCapacity) {
             return ENOMEM;
         }
         size_t firstChunkCount = self->_capacity - (self->_headIndex + self->_count) % self->_capacity;
-        memcpy(newItems, (char*)self->_items + self->_headIndex, firstChunkCount * self->_itemSize);
+        memcpy(newItems, (char*)self->_items + self->_headIndex * self->_itemSize, firstChunkCount * self->_itemSize);
         
         self->_headIndex = 0;
 
         size_t secondChunkCount = self->_count - firstChunkCount;
-        memcpy((char*)newItems + firstChunkCount, self->_items, secondChunkCount * self->_itemSize);
+        memcpy((char*)newItems + firstChunkCount * self->_itemSize, self->_items, secondChunkCount * self->_itemSize);
         
         self->_tailIndex = self->_headIndex + self->_count;
 
